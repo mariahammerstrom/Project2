@@ -1,0 +1,169 @@
+\documentclass{article}
+
+\usepackage[margin=0.5in,bottom=1in,footnotesep=1in]{geometry}
+
+\usepackage{amsmath}
+
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+\usepackage[]{algorithm2e}
+
+\usepackage{lipsum}% for dummy text
+\usepackage[varg]{txfonts}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+\usepackage{titlesec}
+\titleformat{\section}{\fontfamily{phv}\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\fontfamily{phv}\fontsize{10}{15}\itshape}{\thesubsection}{1em}{}
+
+\title{\textbf{FYS4150 Project 2: \\Schr\"odinger's equation for two electrons \\in a 3-dimensional harmonic oscillator well}}
+\author{Marie Foss, Maria Hammerstr{{\o}}m}
+\date{} % removes date from title
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	\noindent \lipsum[1]
+	\vspace*{2ex}
+\end{abstract}
+
+
+
+\begin{multicols}{2}
+
+\section{Introduction}
+The aim of this project is to solve Schr\"odinger's equation for two electrons in a three-dimensional harmonic oscillator well with and without a repulsive Coulomb interaction. We are first interested in the solution of the radial part of Schr\"odinger's equation for \textit{one} electron. This equation reads
+
+\begin{equation}\label{eq:schrod_radial}
+	-\frac{\hbar^2}{2 m} \left ( \frac{1}{r^2} \frac{d}{dr} r^2 \frac{d}{dr} - \frac{l (l + 1)}{r^2} \right )R(r) + V(r) R(r) = E R(r).
+\end{equation}
+In our case $V(r)$ is the harmonic oscillator potential $(1/2)kr^2$ with $k=m\omega^2$ and $E$ is the energy of the harmonic oscillator in three dimensions. The quantum number
+$l$ is the orbital momentum of the electron. In this project we use $l = 0$. The oscillator frequency is $\omega$ and the energies are
+
+\begin{equation}
+	E_{nl}=  \hbar \omega \left(2n+l+\frac{3}{2}\right),
+\end{equation}
+with $n=0,1,2,\dots$ and $l=0,1,2,\dots$.
+
+We will solve Eq. (\ref{eq:schrod_radial}) by reformulating it in a discretized form as an eigenvalue equation to be solved with Jacobi's method. 
+
+After some substitutions and introducing the dimensionless variable $\rho = (1/ \alpha) r$ where $\alpha$ is of dimension length, we can rewrite Eq. (\ref{eq:schrod_radial}) as
+
+\begin{equation}
+	-\frac{d^2}{d\rho^2} u(\rho) + \rho^2u(\rho)  = \lambda u(\rho) .
+\end{equation}
+This is the first equation to solve numerically. In three dimensions the eigenvalues for $l=0$ are $\lambda_0=3,\lambda_1=7,\lambda_2=11,\dots .$
+
+We use the by now standard expression for the second derivative of a function $u$
+
+\begin{equation}\label{eq:diffoperation}
+    u''=\frac{u(\rho+h) -2u(\rho) +u(\rho-h)}{h^2} +O(h^2),
+\end{equation} 
+where $h$ is our step length. For a given number of steps $n_{\mathrm{step}}$, the step length is defined as
+
+\begin{equation}
+	  h=\frac{\rho_{\mathrm{max}}-\rho_{\mathrm{min}} }{n_{\mathrm{step}}}.
+\end{equation}
+Next we define minimum and maximum values for the variable $\rho$, $\rho_{\mathrm{min}}=0$  and $\rho_{\mathrm{max}}$, respectively. Define an arbitrary value of $\rho$ as 
+
+\begin{equation}
+	\rho_i= \rho_{\mathrm{min}} + ih \hspace{1cm} i=0,1,2,\dots , n_{\mathrm{step}}.
+\end{equation}
+Now we can write the Schr\"odinger equation in a compact way
+
+\begin{equation}
+	-\frac{u_{i+1} -2u_i +u_{i-1}}{h^2}+\rho_i^2u_i=-\frac{u_{i+1} -2u_i +u_{i-1} }{h^2}+V_iu_i  = \lambda u_i,
+\end{equation}
+where $V_i=\rho_i^2$ is the harmonic oscillator potential.
+
+Define first the diagonal matrix element
+
+\begin{equation}
+   d_i=\frac{2}{h^2}+V_i,
+\end{equation}
+and the non-diagonal matrix element (which is a mere constant, and are all equal) 
+
+\begin{equation}
+   e_i=-\frac{1}{h^2}.
+\end{equation}
+With these definitions the Schr\"odinger equation takes the following form
+
+\begin{equation}
+d_iu_i+e_{i-1}u_{i-1}+e_{i+1}u_{i+1}  = \lambda u_i,
+\end{equation}
+where $u_i$ is unknown. We can write the latter equation as a matrix eigenvalue problem 
+
+\begin{equation}\label{eq:sematrix}
+    \left( \begin{array}{ccccccc} d_1 & e_1 & 0   & 0    & \dots  &0     & 0 \\
+                                e_1 & d_2 & e_2 & 0    & \dots  &0     &0 \\
+                                0   & e_2 & d_3 & e_3  &0       &\dots & 0\\
+                                \dots  & \dots & \dots & \dots  &\dots      &\dots & \dots\\
+                                0   & \dots & \dots & \dots  &\dots       &d_{n_{\mathrm{step}}-2} & e_{n_{\mathrm{step}}-1}\\
+                                0   & \dots & \dots & \dots  &\dots       &e_{n_{\mathrm{step}}-1} & d_{n_{\mathrm{step}}-1}
+
+             \end{array} \right)      \left( \begin{array}{c} u_{1} \\
+                                                              u_{2} \\
+                                                              \dots\\ \dots\\ \dots\\
+                                                              u_{n_{\mathrm{step}}-1}
+             \end{array} \right)=\lambda \left( \begin{array}{c} u_{1} \\
+                                                              u_{2} \\
+                                                              \dots\\ \dots\\ \dots\\
+                                                              u_{n_{\mathrm{step}}-1}
+             \end{array} \right) 
+\end{equation} 
+
+
+Secondly, we will consider the Schr\"odinger equation for \textit{two} electrons by studying two electrons in a harmonic oscillator well which also interact via a repulsive Coulomb interaction.
+
+We start by writing the single-electron equation as
+
+\begin{equation}
+	-\frac{\hbar^2}{2 m} \frac{d^2}{dr^2} u(r) + \frac{1}{2}k r^2u(r)  = E^{(1)} u(r),
+\end{equation}
+where $E^{(1)}$ stands for the energy with one electron only.
+For two electrons with no repulsive Coulomb interaction, we have the following 
+Schr\"odinger equation
+\[
+\left(  -\frac{\hbar^2}{2 m} \frac{d^2}{dr_1^2} -\frac{\hbar^2}{2 m} \frac{d^2}{dr_2^2}+ \frac{1}{2}k r_1^2+ \frac{1}{2}k r_2^2\right)u(r_1,r_2)  = E^{(2)} u(r_1,r_2) .
+\]
+
+
+
+
+
+
+
+\section{Methods}
+\subsection{Jacobi's method}
+...
+
+
+
+
+
+\section{Results}
+...
+
+
+
+
+
+\section{Conclusions}
+...
+
+
+
+
+
+\section{List of codes}
+
+The codes developed for this project are:\\
+
+...
+\end{multicols}
+
+\end{document}
