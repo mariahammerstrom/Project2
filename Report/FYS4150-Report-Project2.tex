@@ -4,6 +4,7 @@
 
 \usepackage{amsmath}
 
+
 \usepackage{multicol}
 \setlength{\columnsep}{1cm}
 \usepackage[]{algorithm2e}
@@ -41,13 +42,12 @@ The aim of this project is to solve Schr\"odinger's equation for two electrons i
 \begin{equation}\label{eq:schrod_radial}
 	-\frac{\hbar^2}{2 m} \left ( \frac{1}{r^2} \frac{d}{dr} r^2 \frac{d}{dr} - \frac{l (l + 1)}{r^2} \right )R(r) + V(r) R(r) = E R(r).
 \end{equation}
-In our case $V(r)$ is the harmonic oscillator potential $(1/2)kr^2$ with $k=m\omega^2$ and $E$ is the energy of the harmonic oscillator in three dimensions. The quantum number
-$l$ is the orbital momentum of the electron. In this project we use $l = 0$. The oscillator frequency is $\omega$ and the energies are
+In our case $V(r)$ is the harmonic oscillator potential $(1/2)kr^2$ with $k=m\omega^2$ and $E$ is the energy of the harmonic oscillator in three dimensions. The quantum number $l$ is the orbital momentum of the electron. The oscillator frequency is $\omega$ and the energies are
 
 \begin{equation}
 	E_{nl}=  \hbar \omega \left(2n+l+\frac{3}{2}\right),
 \end{equation}
-with $n=0,1,2,\dots$ and $l=0,1,2,\dots$.
+with $n=0,1,2,\dots$ and $l=0,1,2,\dots$. In this project we use $l = 0$. 
 
 We will solve Eq. (\ref{eq:schrod_radial}) by reformulating it in a discretized form as an eigenvalue equation to be solved with Jacobi's method. 
 
@@ -98,12 +98,13 @@ d_iu_i+e_{i-1}u_{i-1}+e_{i+1}u_{i+1}  = \lambda u_i,
 where $u_i$ is unknown. We can write the latter equation as a matrix eigenvalue problem 
 
 \begin{equation}\label{eq:sematrix}
-    \left( \begin{array}{ccccccc} d_1 & e_1 & 0   & 0    & \dots  &0     & 0 \\
-                                e_1 & d_2 & e_2 & 0    & \dots  &0     &0 \\
-                                0   & e_2 & d_3 & e_3  &0       &\dots & 0\\
-                                \dots  & \dots & \dots & \dots  &\dots      &\dots & \dots\\
-                                0   & \dots & \dots & \dots  &\dots       &d_{n_{\mathrm{step}}-2} & e_{n_{\mathrm{step}}-1}\\
-                                0   & \dots & \dots & \dots  &\dots       &e_{n_{\mathrm{step}}-1} & d_{n_{\mathrm{step}}-1}
+    \left( \begin{array}{ccccccc} 		
+    	d_1 & 		e_1 		& 0   		& 0    	& \dots  	&0     					& 0 \\
+	e_1 			& d_2 	& e_2 	& 0    	& \dots  	&0     					&0 \\
+	0   			& e_2 	& d_3 	& e_3  	&0       	&\dots 					& 0\\
+	\dots  		& \dots 	& \dots 	& \dots  	&\dots      	&\dots 					& \dots\\
+	0   			& \dots 	& \dots 	& \dots  	&\dots   	&d_{n_{\mathrm{step}}-2} 		& e_{n_{\mathrm{step}}-1}\\
+	0   			& \dots 	& \dots 	& \dots  	&\dots    	&e_{n_{\mathrm{step}}-1} 		& d_{n_{\mathrm{step}}-1}
 
              \end{array} \right)      \left( \begin{array}{c} u_{1} \\
                                                               u_{2} \\
@@ -115,8 +116,6 @@ where $u_i$ is unknown. We can write the latter equation as a matrix eigenvalue 
                                                               u_{n_{\mathrm{step}}-1}
              \end{array} \right) 
 \end{equation} 
-
-
 Secondly, we will consider the Schr\"odinger equation for \textit{two} electrons by studying two electrons in a harmonic oscillator well which also interact via a repulsive Coulomb interaction.
 
 We start by writing the single-electron equation as
@@ -124,14 +123,16 @@ We start by writing the single-electron equation as
 \begin{equation}
 	-\frac{\hbar^2}{2 m} \frac{d^2}{dr^2} u(r) + \frac{1}{2}k r^2u(r)  = E^{(1)} u(r),
 \end{equation}
-where $E^{(1)}$ stands for the energy with one electron only.
-For two electrons with no repulsive Coulomb interaction, we have the following 
-Schr\"odinger equation
-\[
-\left(  -\frac{\hbar^2}{2 m} \frac{d^2}{dr_1^2} -\frac{\hbar^2}{2 m} \frac{d^2}{dr_2^2}+ \frac{1}{2}k r_1^2+ \frac{1}{2}k r_2^2\right)u(r_1,r_2)  = E^{(2)} u(r_1,r_2) .
-\]
+where $E^{(1)}$ stands for the energy with one electron only. For two electrons with \textit{no} repulsive Coulomb interaction, we have the following Schr\"odinger equation:
 
+\begin{equation}
+	\left(  -\frac{\hbar^2}{2 m} \frac{d^2}{dr_1^2} -\frac{\hbar^2}{2 m} \frac{d^2}{dr_2^2}+ \frac{1}{2}k r_1^2+ \frac{1}{2}k r_2^2\right)u(r_1,r_2)  = E^{(2)} u(r_1,r_2) .
+\end{equation}
+After a series of substitutions, this can be written as
 
+\begin{equation}
+	- \frac{d^2}{d \rho^2} \psi (\rho) + \omega_r^2 \rho^2 \psi (\rho) + \frac{1}{\rho}  = \lambda \psi (\rho)
+\end{equation}
 
 
 
@@ -139,9 +140,23 @@ Schr\"odinger equation
 
 \section{Methods}
 \subsection{Jacobi's method}
-...
+In this project we will use Jacobi's method to find the eigenvalues, which consists of doing a number of similarity transformations
 
+\begin{equation}
+	\textbf{S}^T \textbf{AS} = \textbf{B}
+\end{equation}
+where \textbf{A} is the matrix in our given problem, and \textbf{S} is an $(n \times n)$ orthogonal transformation matrix
 
+\begin{equation}
+	\textbf{S} = \left( \begin{array}{cccccccc} 
+				1 		& 0 		& \dots    		& 0    					& 0  		&\dots      	& 0 		& 0 \\
+                                	0 		& 1 		& \dots  		& 0    					& 0  		&\dots     	& 0		& 0 \\
+                                	\dots  	& \dots 	& \dots 		& \dots  					&\dots      	&\dots 	& 0		& \dots \\
+                                	0   		& 0 		& \dots 		& \textrm{cos } \theta 		&0       	& \dots	& 0		& \textrm{sin } \theta \\
+				0 		& 0 		& \dots  		& 0    					& 1  		&\dots     	& 0		& 0 \\
+             \end{array} \right)
+\end{equation} 
+(MATRIX NOT FINISHED)
 
 
 
