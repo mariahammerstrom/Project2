@@ -11,6 +11,20 @@
 using namespace std;
 using namespace arma;
 
+// FUNCTIONS
+
+// Calculates and return the value of the potential for a given value of x.
+double potential_HO(double x){
+    return x*x; // harmonic oscillator potential
+}
+
+// Calculates and return the value of the potential for a given value of x and omega.
+double potential_coulomb(double x, double omega){
+    return omega*omega*x*x + 1./x; // harmonic oscillator potential with coulomb interaction
+}
+
+
+
 // MAIN PROGRAM
 int main()
 {
@@ -42,7 +56,7 @@ int main()
     A(0,0) = 2./(h*h) + V(0); // upper-left element
     A(0,1) = e;
 
-    for (i = 1; i < n; i++){
+    for (int i = 1; i < n; i++){
         rho = rho_min + i*h;
         A(i,i-1) = e; // non-diagonal non-zero matrix element
         A(i,i) = d + V(i); // diagonal elements
@@ -73,24 +87,5 @@ int main()
     cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
 
 
-    // Clear memory
-    for (i=0; i<n ; i++)
-        delete [] A[i];
-    delete [] A;
-
-
     return 0;
-}
-
-
-// FUNCTIONS
-
-// Calculates and return the value of the potential for a given value of x.
-double potential_HO(double x){
-    return x*x; // harmonic oscillator potential
-}
-
-// Calculates and return the value of the potential for a given value of x and omega.
-double potential_coulomb(double x, double omega){
-    return omega*omega*x*x + 1./x; // harmonic oscillator potential with coulomb interaction
 }

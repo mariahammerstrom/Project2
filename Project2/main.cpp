@@ -17,94 +17,6 @@
 using namespace std;
 using namespace arma;
 
-// MAIN PROGRAM
-int main()
-{
-    clock_t start, finish; // declare start and final time
-    start = clock();
-
-    int n = 10;
-    int k,l;
-    double rho_min = 0.0; // minimum value
-    double rho_max = 10.0; // maximum value (set by the user)
-    double h = (rho_max - rho_min)/( (double) n); // step length
-
-    // Set up eigenvector matrix
-    double ** R;
-    R = new double*[n];
-    for (i = 0; i < n; i++)
-        R[i] = new double[n];
-
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < n; j++){
-            if (i == j){
-                R[i][j] = 1.0; // diagonal matrix elements
-            }
-            else{
-                R[i][j] = 0.0; // non-diagonal matrix elements
-            }
-        }
-    }
-
-    cout << R << endl;
-
-
-    // Set up potential
-    double rho_i,V[n];
-
-    for (int i = 0; i < n; i++){
-        rho_i = rho_min + i*h;
-        V[i] = potential(rho_i);
-    }
-
-
-    // Set up tridiagonal matrix
-    double ** A;
-    A = new double*[n];
-    for (i = 0; i < n; i++)
-        A[i] = new double[n];
-
-    double e = -1./(h*h); // non-diagonal constant
-    double d = 2./(h*h); // diagonal constant
-
-    for(i=0 ; i<n ; i++){
-            for(j=0 ; j<n ; j++){
-                if(j==i)
-                    A[i][j] = d + V[i]; // diagonal matrix elements
-                else if(j == i+1 || j == i-1)
-                    A[i][j] = e; // non-diagonal non-zero matrix elements
-                else
-                    A[i][j] = 0.0;
-            }
-        }
-
-    cout << A << endl;
-
-
-    // Doing the calculations
-    int iterations = 0;
-    double epsilon = 1.0e8; // tolerance
-    double max_number_iterations = (double) n * (double) n * (double) n;
-    double max_offdiag = maxoffdiag(A, &k, &l, n);
-
-    while (fabs (max_offdiag) > epsilon && (double) iterations < max_number_iterations){
-        max_offdiag = maxoffdiag(A, &k, &l, n); // find max. matrix element
-        rotate(A, R, k, l, n); // rotate the matrix
-        iterations++;
-    }
-
-    cout << "Number of iterations: " << iterations << endl;
-
-    finish = clock(); // final time
-    cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
-
-    // Clear memory
-    for (i=0; i<n ; i++)
-        delete [] A[i];
-    delete [] A;
-
-    return 0;
-}
 
 
 // FUNCTIONS
@@ -113,7 +25,6 @@ int main()
 double potential(double x){
     return x*x; // harmonic oscillator potential
 }
-
 
 // Calculates and return the value of the potential for a given value of x and omega.
 double potential_coulomb(double x, double omega){
@@ -192,7 +103,99 @@ void rotate (double ** A, double ** R, int k, int l, int n)
 
 
 // Compute the eigenvalues ??
-void jacobi_method (double ** A, double ** R, int n){
-    // something something
-    return;
+//void jacobi_method (double ** A, double ** R, int n){
+//    // something something
+//    return;
+//}
+
+
+
+
+// MAIN PROGRAM
+int main()
+{
+    clock_t start, finish; // declare start and final time
+    start = clock();
+
+    int n = 10;
+    int k,l;
+    double rho_min = 0.0; // minimum value
+    double rho_max = 10.0; // maximum value (set by the user)
+    double h = (rho_max - rho_min)/( (double) n); // step length
+
+    // Set up eigenvector matrix
+    double ** R;
+    R = new double*[n];
+    for (int i = 0; i < n; i++)
+        R[i] = new double[n];
+
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            if (i == j){
+                R[i][j] = 1.0; // diagonal matrix elements
+            }
+            else{
+                R[i][j] = 0.0; // non-diagonal matrix elements
+            }
+        }
+    }
+
+    cout << R << endl;
+
+
+    // Set up potential
+    double rho_i,V[n];
+
+    for (int i = 0; i < n; i++){
+        rho_i = rho_min + i*h;
+        V[i] = potential(rho_i);
+    }
+
+
+    // Set up tridiagonal matrix
+    double ** A;
+    A = new double*[n];
+    for (int i = 0; i < n; i++)
+        A[i] = new double[n];
+
+    double e = -1./(h*h); // non-diagonal constant
+    double d = 2./(h*h); // diagonal constant
+
+    for(int i=0 ; i<n ; i++){
+            for(int j=0 ; j<n ; j++){
+                if(j==i)
+                    A[i][j] = d + V[i]; // diagonal matrix elements
+                else if(j == i+1 || j == i-1)
+                    A[i][j] = e; // non-diagonal non-zero matrix elements
+                else
+                    A[i][j] = 0.0;
+            }
+        }
+
+    cout << A << endl;
+
+
+    // Doing the calculations
+    int iterations = 0;
+    double epsilon = 1.0e8; // tolerance
+    double max_number_iterations = (double) n * (double) n * (double) n;
+    double max_offdiag = maxoffdiag(A, &k, &l, n);
+
+    while (fabs (max_offdiag) > epsilon && (double) iterations < max_number_iterations){
+        max_offdiag = maxoffdiag(A, &k, &l, n); // find max. matrix element
+        rotate(A, R, k, l, n); // rotate the matrix
+        iterations++;
+    }
+
+    cout << "Number of iterations: " << iterations << endl;
+
+    finish = clock(); // final time
+    cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
+
+    // Clear memory
+    for (int i = 0; i < n ; i++)
+        delete [] A[i];
+    delete [] A;
+
+    return 0;
 }
