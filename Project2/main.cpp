@@ -48,7 +48,7 @@ void rotate (double ** A, double ** R, int k, int l, int n){
     double s,c; // s = sin(theta), c = cos(theta)
     if (A[k][l] != 0.0){
         double t, tau; // t = tan(theta), tau = cot(2*theta)
-        tau = (A[l][l] - A[k][k]/(2*A[k][l]));
+        tau = (A[l][l] - A[k][k])/(2*A[k][l]);
         if (tau > 0){
             t = 1.0/(tau + sqrt(1.0 + tau*tau));
         } else {
@@ -60,31 +60,25 @@ void rotate (double ** A, double ** R, int k, int l, int n){
         c = 1.0;
         s = 0.0;
     }
-    double a_kk, a_ll, a_ik, a_il, r_ik, r_il;
-    a_kk = A[k][k];
-    a_ll = A[l][l];
 
     // Changing the matrix elements with indices k and l
-    A[k][k] = c*c*a_kk - 2.0*c*s*A[k][l] + s*s*a_ll;
-    A[l][l] = s*s*a_kk + 2.0*c*s*A[k][l] + s*s*a_ll;
+    A[k][k] = c*c*A[k][k] - 2.0*c*s*A[k][l] + s*s*A[l][l];
+    A[l][l] = s*s*A[k][k] + 2.0*c*s*A[k][l] + c*c*A[l][l];
     A[k][l] = 0.0;
     A[l][k] = 0.0;
 
     // Changing the remaining elements
     for (int i = 0; i < n; i++){
         if (i != k && i != l){
-            a_ik = A[i][k];
-            a_il = A[i][l];
-            A[i][k] = c*a_ik - s*a_il;
+            A[i][k] = c*A[i][k] - s*A[i][l];
             A[k][i] = A[i][k];
-            A[i][l] = c*a_il + s*a_ik;
+            A[i][l] = c*A[i][l] + s*A[i][k];
             A[l][i] = A[i][l];
         }
+
         // Compute new eigenvectors
-        r_ik = R[i][k];
-        r_il = R[i][l];
-        R[i][k] = c*r_ik - s*r_il;
-        R[i][l] = c*r_il + s*r_ik;
+        R[i][k] = c*R[i][k] - s*R[i][l];
+        R[i][l] = c*R[i][l] + s*R[i][k];
     }
     return;
 }
@@ -126,7 +120,7 @@ void jacobi_method(double ** A, double ** R, int n){
 int main()
 {
     // CONSTANTS
-    int n = 5; // number of steps
+    int n = 20; // number of steps
     double rho_min = 0.0; // minimum value
     double rho_max = 3.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/( (double) n); // step length
@@ -183,16 +177,16 @@ int main()
     }
 
     // First eigenvector
-    cout << "First eigenvector:" << endl;
+    /*cout << "First eigenvector:" << endl;
     for(int i = 0; i<n; i++){
         cout << eigvec(i) << endl;
-    }
+    }*/
 
     // Second eigenvector
-    cout << "Second eigenvector:" << endl;
+    /*cout << "Second eigenvector:" << endl;
     for(int i = n; i < 2*n; i++){
         cout << eigvec(i) << endl;
-    }
+    }*/
 
     finish_armadillo = clock(); // final time
     cout << "Time: " << "\t" << ((finish_armadillo - start_armadillo)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
