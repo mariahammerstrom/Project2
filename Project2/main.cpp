@@ -107,13 +107,13 @@ void jacobi_method(double ** A, double ** R, int n){
     double max_offdiag = maxoffdiag(A, &k, &l, n);
 
     while (fabs (max_offdiag) > epsilon && (double) iterations < max_number_iterations){
-        max_offdiag = maxoffdiag(A, &k, &l, n); // find max. matrix element
         rotate(A, R, k, l, n); // rotate the matrix
-        cout << "Rotation #" << iterations << ":" << endl;
+        max_offdiag = maxoffdiag(A, &k, &l, n); // find max. matrix element
+        /*cout << "Rotation #" << iterations << ":" << endl;
         cout << "B[0][0] = " << A[0][0] << endl;
         cout << "B[0][1] = " << A[0][1] << endl;
         cout << "B[1][0] = " << A[1][0] << endl;
-        cout << "B[1][1] = " << A[1][1] << endl;
+        cout << "B[1][1] = " << A[1][1] << endl;*/
         iterations++;
     }
     cout << "Number of iterations: " << iterations << endl;
@@ -126,7 +126,7 @@ void jacobi_method(double ** A, double ** R, int n){
 int main()
 {
     // CONSTANTS
-    int n = 2; // number of steps
+    int n = 5; // number of steps
     double rho_min = 0.0; // minimum value
     double rho_max = 3.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/( (double) n); // step length
@@ -178,9 +178,12 @@ int main()
 
     // Print out results
     cout << "Lowest eigenvalues:" << endl;
-    for (int i = 0; i < 2; i++){
-        cout << eigval(i) << endl; // correct thing to print out??
+    for (int i = 0; i < 5; i++){
+        cout << eigval(i) << endl;
     }
+
+    cout << "Eigenvectors:" << endl;
+    cout << eigvec << endl; // How to index these???
 
     finish_armadillo = clock(); // final time
     cout << "Time: " << "\t" << ((finish_armadillo - start_armadillo)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
@@ -222,15 +225,15 @@ int main()
                     B[i][j] = 0.0;
             }
         }
-    cout << "Before Jacobi:" << endl;
+    /*cout << "Before Jacobi:" << endl;
     cout << "B[0][0] = " << B[0][0] << endl;
     cout << "B[0][1] = " << B[0][1] << endl;
     cout << "B[1][0] = " << B[1][0] << endl;
-    cout << "B[1][1] = " << B[1][1] << endl;
+    cout << "B[1][1] = " << B[1][1] << endl;*/
 
     jacobi_method(B,R,n);
     cout << "Lowest eigenvalues:" << endl;
-    for (int i=0; i<2 ; i++){
+    for (int i=0; i<5 ; i++){
         cout << B[i][i] << endl;
     }
 
