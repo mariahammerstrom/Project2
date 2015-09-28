@@ -32,7 +32,7 @@ double potential(double x){
 double maxoffdiag(double ** A, int * k, int * l, int n){
     double max = 0.0;
     for (int i = 0; i < n; i++){
-        for (int j = i + 1; j < n; j ++){
+        for (int j = i + 1; j < n; j++){
             if (fabs(A[i][j]) > max){
                 max = fabs(A[i][j]); // value of max element
                 *l = i; // row index of max element
@@ -49,10 +49,10 @@ void rotate (double ** A, double ** R, int k, int l, int n){
     if (A[k][l] != 0.0){
         double t, tau; // t = tan(theta), tau = cot(2*theta)
         tau = (A[l][l] - A[k][k])/(2*A[k][l]);
-        if (tau > 0){
+        if (tau >= 0){
             t = 1.0/(tau + sqrt(1.0 + tau*tau));
         } else {
-            t = - 1.0/(- tau + sqrt(1.0 + tau*tau));
+            t = -1.0/(- tau + sqrt(1.0 + tau*tau));
         }
         c = 1./sqrt(1 + t*t);
         s = c*t;
@@ -96,7 +96,7 @@ void jacobi_method(double ** A, double ** R, int n){
 
     int iterations = 0;
     int k,l;
-    double epsilon = 1.0e-8; // tolerance
+    double epsilon = 1.0e-10; // tolerance
     double max_number_iterations = (double) n * (double) n * (double) n;
     double max_offdiag = maxoffdiag(A, &k, &l, n);
 
@@ -120,13 +120,13 @@ void jacobi_method(double ** A, double ** R, int n){
 int main()
 {
     // CONSTANTS
-    int n = 20; // number of steps
+    int n = 100; // number of steps
     double rho_min = 0.0; // minimum value
-    double rho_max = 3.0; // maximum value (set by the user)
+    double rho_max = 10.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/( (double) n); // step length
 
-    double e = -1./(h*h); // non-diagonal constant
-    double d = 2./(h*h); // diagonal constant
+    double e = -1.0/(h*h); // non-diagonal constant
+    double d = 2.0/(h*h); // diagonal constant
 
     cout << "rho_min = " << rho_min << endl;
     cout << "rho_max = " << rho_max << endl;
@@ -151,7 +151,7 @@ int main()
     // Set up tridiagonal matrix A
     mat A = zeros<mat>(n,n);
 
-    A(0,0) = 2./(h*h) + V(0); // upper-left element
+    A(0,0) = d + V(0); // upper-left element
     A(0,1) = e;
 
     for (int i = 1; i < n-1; i++){
@@ -199,10 +199,10 @@ int main()
     start = clock();
 
     // Set up potential
-    double rho_i,V_i[n];
+    double V_i[n];
 
     for (int i = 0; i < n; i++){
-        rho_i = rho_min + i*h;
+        double rho_i = rho_min + i*h;
         V_i[i] = potential(rho_i);
     }
 
@@ -235,8 +235,9 @@ int main()
     cout << "B[1][1] = " << B[1][1] << endl;*/
 
     jacobi_method(B,R,n);
-    cout << "Lowest eigenvalues:" << endl;
-    for (int i=0; i<5 ; i++){
+    // Sort and print eigenvalues
+    cout << "Eigenvalues:" << endl;
+    for (int i=0; i<n ; i++){
         cout << B[i][i] << endl;
     }
 
