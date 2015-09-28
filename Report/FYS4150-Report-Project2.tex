@@ -30,6 +30,9 @@
 \begin{abstract}
 	\noindent \lipsum[1]
 	\vspace*{2ex}
+	
+	\noindent \textbf{Github:} \textit{https://github.com/mariahammerstrom/Project2}
+	\vspace*{2ex}
 \end{abstract}
 
 
@@ -39,30 +42,30 @@
 \section{Introduction}
 The aim of this project is to solve Schr\"odinger's equation for two electrons in a three-dimensional harmonic oscillator well with and without a repulsive Coulomb interaction. We are first interested in the solution of the radial part of Schr\"odinger's equation for \textit{one} electron. This equation reads
 
-\begin{equation}\label{eq:schrod_radial}
+\begin{equation*}\label{eq:schrod_radial}
 	-\frac{\hbar^2}{2 m} \left ( \frac{1}{r^2} \frac{d}{dr} r^2 \frac{d}{dr} - \frac{l (l + 1)}{r^2} \right )R(r) + V(r) R(r) = E R(r).
-\end{equation}
+\end{equation*}
 In our case $V(r)$ is the harmonic oscillator potential $(1/2)kr^2$ with $k=m\omega^2$ and $E$ is the energy of the harmonic oscillator in three dimensions. The quantum number $l$ is the orbital momentum of the electron. The oscillator frequency is $\omega$ and the energies are
 
-\begin{equation}
+\begin{equation*}
 	E_{nl}=  \hbar \omega \left(2n+l+\frac{3}{2}\right),
-\end{equation}
+\end{equation*}
 with $n=0,1,2,\dots$ and $l=0,1,2,\dots$. In this project we use $l = 0$. 
 
 We will solve Eq. (\ref{eq:schrod_radial}) by reformulating it in a discretized form as an eigenvalue equation to be solved with Jacobi's method. 
 
 After some substitutions and introducing the dimensionless variable $\rho = (1/ \alpha) r$ where $\alpha$ is of dimension length, we can rewrite Eq. (\ref{eq:schrod_radial}) as
 
-\begin{equation}
+\begin{equation*}
 	-\frac{d^2}{d\rho^2} u(\rho) + \rho^2u(\rho)  = \lambda u(\rho) .
-\end{equation}
+\end{equation*}
 This is the first equation to solve numerically. In three dimensions the eigenvalues for $l=0$ are $\lambda_0=3,\lambda_1=7,\lambda_2=11,\dots .$
 
 We use the by now standard expression for the second derivative of a function $u$
 
-\begin{equation}\label{eq:diffoperation}
+\begin{equation*}\label{eq:diffoperation}
     u''=\frac{u(\rho+h) -2u(\rho) +u(\rho-h)}{h^2} +O(h^2),
-\end{equation} 
+\end{equation*} 
 where $h$ is our step length. For a given number of steps $n_{\mathrm{step}}$, the step length is defined as
 
 \begin{equation}
@@ -75,9 +78,9 @@ Next we define minimum and maximum values for the variable $\rho$, $\rho_{\mathr
 \end{equation}
 Now we can write the Schr\"odinger equation in a compact way
 
-\begin{equation}
+\begin{equation*}
 	-\frac{u_{i+1} -2u_i +u_{i-1}}{h^2}+\rho_i^2u_i=-\frac{u_{i+1} -2u_i +u_{i-1} }{h^2}+V_iu_i  = \lambda u_i,
-\end{equation}
+\end{equation*}
 where $V_i=\rho_i^2$ is the harmonic oscillator potential.
 
 Define first the diagonal matrix element
@@ -120,21 +123,25 @@ Secondly, we will consider the Schr\"odinger equation for \textit{two} electrons
 
 We start by writing the single-electron equation as
 
-\begin{equation}
+\begin{equation*}
 	-\frac{\hbar^2}{2 m} \frac{d^2}{dr^2} u(r) + \frac{1}{2}k r^2u(r)  = E^{(1)} u(r),
-\end{equation}
+\end{equation*}
 where $E^{(1)}$ stands for the energy with one electron only. For two electrons with \textit{no} repulsive Coulomb interaction, we have the following Schr\"odinger equation:
 
-\begin{equation}
+\begin{equation*}
 	\left(  -\frac{\hbar^2}{2 m} \frac{d^2}{dr_1^2} -\frac{\hbar^2}{2 m} \frac{d^2}{dr_2^2}+ \frac{1}{2}k r_1^2+ \frac{1}{2}k r_2^2\right)u(r_1,r_2)  = E^{(2)} u(r_1,r_2) .
-\end{equation}
+\end{equation*}
 After a series of substitutions, this can be written as
 
-\begin{equation}
+\begin{equation}\label{eq:coulomb}
 	- \frac{d^2}{d \rho^2} \psi (\rho) + \omega_r^2 \rho^2 \psi (\rho) + \frac{1}{\rho}  = \lambda \psi (\rho)
 \end{equation}
+In this case the potential is:
 
-
+\begin{equation}
+	V_i = \omega_r^2 \rho^2 + 1/\rho
+\end{equation}
+where we will study the cases where the oscillator frequency $\omega_r$ is $\omega_r = 0.01$, $\omega_r = 0.5$, $\omega_r = 1$ and $\omega_r = 5$ for the ground state only, that is, the lowest-lying state. 
 
 
 
@@ -142,27 +149,71 @@ After a series of substitutions, this can be written as
 \subsection{Jacobi's method}
 In this project we will use Jacobi's method to find the eigenvalues, which consists of doing a number of similarity transformations
 
-\begin{equation}
+\begin{equation*}
 	\textbf{S}^T \textbf{AS} = \textbf{B}
-\end{equation}
+\end{equation*}
 where \textbf{A} is the matrix in our given problem, and \textbf{S} is an $(n \times n)$ orthogonal transformation matrix
 
-\begin{equation}
+\begin{equation*}
 	\textbf{S} = \left( \begin{array}{cccccccc} 
 				1 		& 0 		& \dots    		& 0    					& 0  		&\dots      	& 0 		& 0 \\
                                 	0 		& 1 		& \dots  		& 0    					& 0  		&\dots     	& 0		& 0 \\
                                 	\dots  	& \dots 	& \dots 		& \dots  					&\dots      	&\dots 	& 0		& \dots \\
                                 	0   		& 0 		& \dots 		& \textrm{cos } \theta 		&0       	& \dots	& 0		& \textrm{sin } \theta \\
 				0 		& 0 		& \dots  		& 0    					& 1  		&\dots     	& 0		& 0 \\
-             \end{array} \right)
-\end{equation} 
-(MATRIX NOT FINISHED)
+				\dots 	& \dots 	& \dots  		& \dots    					& \dots  	&\dots     	& 0		& \dots \\
+				0 		& 0 		& \dots  		& 0    					& 0  		&\dots     	& 1		& 0 \\
+				0 		& 0 		& \dots  		& - \textrm{sin } \theta  		& \dots  	&\dots     	& 0		& \textrm{cos } \theta
+
+
+             \end{array} \right).
+\end{equation*} 
+The recipe is to choose $\theta$ so that all non-diagonal matrix elements $b_{kl}$ become zero. 
+
+The \textbf{algorithm} can be described as follows: 
+
+\begin{itemize}
+	\item Choose a tolerance $\epsilon$, typically $10^{-8}$ or smaller.
+	\item Find matrix element $a_{kl}$ with the largest value and its indices $k$ and $l$.
+	\item Check that max$(a_{kl}^2) > \epsilon$ for the off-diagonal matrix elements.
+	\item Compute $\tau$, sin $\theta$, cos $\theta$, tan $\theta$.
+	\item Compute the similarity transformations for this set of values for $(k,l)$, which will create a new matrix, \textbf{B} = \textbf{S}$(k,l,\theta)^T$\textbf{A}\textbf{S}$(k,l,\theta)$.
+	\item Continue to follow these steps until max$(a_{kl}^2) > \epsilon$ is no longer the case.
+\end{itemize}
+
 
 
 
 \section{Results}
+\subsection{Harmonic oscillator}
+In the case of the harmonic oscillator there is an analytical solution to what the lowest eigenvalues should be. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
+
 ...
 
+In order to get the lowest three eigenvalues with four leading digits, we need $n_{\textrm{step}} = ?$.
+
+...
+
+The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. 
+
+...
+
+The number of similarity transformation needed for the non-diagonal matrix elements to become zero depends on the dimensionality of the matrix. An upper limit to the allowed number of similarity transformations is set by $n_{\textrm{transf}} = n \cdot n \cdot n$. When running the code, the number of transformations is counted. For different dimensionalities we find:
+
+(table of values)
+
+
+
+\subsection{Harmonic oscillator with Coulomb interactions}
+For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). 
+
+...
+
+Plot of wave function for two electrons as a function of relative coordinates $r$ and different values of $\omega_r$: ...
+
+
+\subsection{Unit tests}
+...
 
 
 
