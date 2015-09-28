@@ -14,6 +14,7 @@
 #include <fstream>
 #include <algorithm>
 #include <armadillo>
+#include "lib.h"
 
 using namespace std;
 using namespace arma;
