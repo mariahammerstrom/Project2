@@ -1,10 +1,10 @@
-    /*
-     * The definition module                              
-     *                      lib.h                    
-     * for the library function common for all C programs.
-     */
+/*
+ * The definition module
+ *                      lib.h
+ * for the library function common for all C programs.
+ */
 
-     // Standard ANSI-C++ include files 
+ // Standard ANSI-C++ include files
 
 
 #include <iostream>
@@ -22,33 +22,33 @@ using namespace std;
 //#define   INFINITY   1.0E15
 #define   UL         unsigned long
 
-         /* a macro used in function pythag() */
+     /* a macro used in function pythag() */
 
 static float sqrarg;
 #define SQR(a) ((sqrarg = (a)) == 0.0 ? 0.0 : sqrarg * sqrarg)
 
 
-     /* Macro definitions for integer arguments only */
+ /* Macro definitions for integer arguments only */
 
 #define   SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
 
-    // ******   data declaration  ******* 
+// ******   data declaration  *******
 
-typedef   struct  {   // structure definition for execution time   
-  unsigned long long int
-                          tick,
-                           sec,
-                           min,
-                          hour;
-} TID; 
+typedef   struct  {   // structure definition for execution time
+unsigned long long int
+                      tick,
+                       sec,
+                       min,
+                      hour;
+} TID;
 
-    // Function declarations
+// Function declarations
 
 TID time_step(int num);
 void  **matrix(int, int, int);
 void free_matrix(void **);
 void rk4(double *, double *, int, double, double, double  *,
-	           void (*derivs)(double, double *, double *));
+           void (*derivs)(double, double *, double *));
 void ludcmp(double **, int, int *, double*);
 void lubksb(double **, int, int *, double *);
 void tqli(double *, double *, int, double **);
@@ -69,6 +69,3 @@ double ran0(long *);
 double ran1(long *);
 double ran2(long *);
 double ran3(long *);
-
-
-
