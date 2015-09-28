@@ -6,6 +6,5 @@ CONFIG -= qt
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -larmadillo
 
-SOURCES += main.cpp \
-    armadillo_solver.cpp
+SOURCES += main.cpp
 
