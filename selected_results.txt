@@ -1,0 +1,27 @@
+SELECTED RESULTS
+
+
+HARMONIC OSCILLATOR:
+
+rho_min = 0
+rho_max = 4
+No. of steps = 50
+
+ARMADILLO
+Lowest eigenvalues:
+2.99802
+6.99206
+11.0292
+15.3973
+20.6
+Time: 	0 seconds
+
+OUR ALGORITHM
+Max no. iterations: 6.25e+06
+Number of iterations: 4378
+2.99802
+6.99206
+11.0292
+15.3973
+20.6
+Time: 	0 seconds
