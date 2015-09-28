@@ -182,8 +182,17 @@ int main()
         cout << eigval(i) << endl;
     }
 
-    cout << "Eigenvectors:" << endl;
-    cout << eigvec << endl; // How to index these???
+    // First eigenvector
+    cout << "First eigenvector:" << endl;
+    for(int i = 0; i<n; i++){
+        cout << eigvec(i) << endl;
+    }
+
+    // Second eigenvector
+    cout << "Second eigenvector:" << endl;
+    for(int i = n; i < 2*n; i++){
+        cout << eigvec(i) << endl;
+    }
 
     finish_armadillo = clock(); // final time
     cout << "Time: " << "\t" << ((finish_armadillo - start_armadillo)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
