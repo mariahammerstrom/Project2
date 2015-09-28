@@ -12,10 +12,11 @@
 #include <time.h>
 #include <math.h>
 #include <fstream>
-#include <armadillo>
+#include <algorithm>
+//#include <armadillo>
 
 using namespace std;
-using namespace arma;
+//using namespace arma;
 
 
 
@@ -135,6 +136,7 @@ int main()
 
 
     // ARMADILLO SOLVER
+ /*
     cout << "ARMADILLO" << endl;
     clock_t start_armadillo, finish_armadillo; // declare start and final time
     start_armadillo = clock();
@@ -177,21 +179,21 @@ int main()
     }
 
     // First eigenvector
-    /*cout << "First eigenvector:" << endl;
+    cout << "First eigenvector:" << endl;
     for(int i = 0; i<n; i++){
         cout << eigvec(i) << endl;
-    }*/
+    }
 
     // Second eigenvector
-    /*cout << "Second eigenvector:" << endl;
+    cout << "Second eigenvector:" << endl;
     for(int i = n; i < 2*n; i++){
         cout << eigvec(i) << endl;
-    }*/
+    }
 
     finish_armadillo = clock(); // final time
     cout << "Time: " << "\t" << ((finish_armadillo - start_armadillo)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
 
-
+*/
 
     // OUR ALGORITHM
     cout << endl << "OUR ALGORITHM" << endl;
@@ -236,9 +238,13 @@ int main()
 
     jacobi_method(B,R,n);
     // Sort and print eigenvalues
-    cout << "Eigenvalues:" << endl;
-    for (int i=0; i<n ; i++){
-        cout << B[i][i] << endl;
+    cout << "Lowest eigenvalues:" << endl;
+    double eigenvalues[n];
+    for (int i=0; i<n ; i++)
+        eigenvalues[i]=B[i][i];
+    sort(eigenvalues,eigenvalues+n);
+    for (int i=0; i<10 ; i++){
+        cout << eigenvalues[i] << endl;
     }
 
     //cout << "After Jacobi:" << endl;
