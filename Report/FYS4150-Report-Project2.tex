@@ -101,23 +101,18 @@ d_iu_i+e_{i-1}u_{i-1}+e_{i+1}u_{i+1}  = \lambda u_i,
 where $u_i$ is unknown. We can write the latter equation as a matrix eigenvalue problem 
 
 \begin{equation}\label{eq:sematrix}
-    \left( \begin{array}{ccccccc} 		
-    	d_1 & 		e_1 		& 0   		& 0    	& \dots  	&0     					& 0 \\
-	e_1 			& d_2 	& e_2 	& 0    	& \dots  	&0     					&0 \\
-	0   			& e_2 	& d_3 	& e_3  	&0       	&\dots 					& 0\\
-	\dots  		& \dots 	& \dots 	& \dots  	&\dots      	&\dots 					& \dots\\
-	0   			& \dots 	& \dots 	& \dots  	&\dots   	&d_{n_{\mathrm{step}}-2} 		& e_{n_{\mathrm{step}}-1}\\
-	0   			& \dots 	& \dots 	& \dots  	&\dots    	&e_{n_{\mathrm{step}}-1} 		& d_{n_{\mathrm{step}}-1}
+    \left( \begin{array}{cccccc} 		
+    d_1	& e_1	& 0		& \dots & 0	& 0 \\
+	e_1 & d_2 	& e_2  	& \dots	& 0 & 0 \\
+	0	& e_2 	& d_3 	& e_3	&\dots 	& 0\\
+	\dots & \dots & \dots &\dots &\dots & \dots\\
+	0 	& \dots & \dots &\dots &d_{n_{\mathrm{step}}-2} 		& e_{n_{\mathrm{step}}-1}\\
+	0   & \dots & \dots  &\dots &e_{n_{\mathrm{step}}-1} 		& d_{n_{\mathrm{step}}-1}
 
-             \end{array} \right)      \left( \begin{array}{c} u_{1} \\
-                                                              u_{2} \\
-                                                              \dots\\ \dots\\ \dots\\
-                                                              u_{n_{\mathrm{step}}-1}
-             \end{array} \right)=\lambda \left( \begin{array}{c} u_{1} \\
-                                                              u_{2} \\
-                                                              \dots\\ \dots\\ \dots\\
-                                                              u_{n_{\mathrm{step}}-1}
-             \end{array} \right) 
+    \end{array} \right)
+    \left( \begin{array}{c} u_{1} \\ u_{2} \\ \dots\\ \dots\\ \dots \\ u_{n_{\mathrm{step}}-1} \end{array} \right)
+    = \lambda \left( \begin{array}{c} u_{1} \\ u_{2} \\ \dots\\
+    \dots\\ \dots\\ u_{n_{\mathrm{step}}-1} \end{array} \right) 
 \end{equation} 
 Secondly, we will consider the Schr\"odinger equation for \textit{two} electrons by studying two electrons in a harmonic oscillator well which also interact via a repulsive Coulomb interaction.
 
