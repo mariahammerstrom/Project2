@@ -25,9 +25,9 @@ using namespace arma;
 
 // Calculates and return the value of the potential for a given value of x.
 double potential(double x){
-    double omega = 0.01;
-    return omega*omega*x*x + 1./x;
-    //return x*x;
+    //double omega = 5.0;
+    //return omega*omega*x*x + 1./x;
+    return x*x;
 }
 
 // Find maximum matrix element
@@ -99,7 +99,7 @@ mat rotate (mat A, mat R, int k, int l, int n){
 int main()
 {
     // CONSTANTS
-    int n = 50; // number of steps
+    int n = 10; // number of steps
     double rho_min = 0.0; // minimum value
     double rho_max = 4.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
@@ -107,6 +107,7 @@ int main()
     double e = -1.0/(h*h); // non-diagonal constant
     double d = 2.0/(h*h); // diagonal constant
 
+    cout << "INITIAL CONDITIONS:" << endl;
     cout << "rho_min = " << rho_min << endl;
     cout << "rho_max = " << rho_max << endl;
     cout << "No. of steps = " << n << endl;
@@ -114,11 +115,12 @@ int main()
 
 
     // ARMADILLO SOLVER
-    cout << "ARMADILLO" << endl;
-    clock_t start_armadillo, finish_armadillo; // declare start and final time
+    cout << "ARMADILLO:" << endl;
+
+    clock_t start_armadillo, finish_armadillo; // declare start and final time for Armadillo solver
     start_armadillo = clock();
 
-    // Set up potential
+    // Set up dimensionless variable rho and potential
     vec rho(n+1);
     vec V(n+1);
 
@@ -141,9 +143,7 @@ int main()
 
     A(n-1,n-2) = e;
     A(n-1,n-1) = d + V(n);
-
-    //cout << A << endl;
-    mat B = A;
+    mat B = A; // copy matrix for use with our algorithm
 
     // Diagonalize and find eigenvalues
     vec eigval;
@@ -151,23 +151,52 @@ int main()
 
     eig_sym(eigval,eigvec,A);
 
-    // Print out results
+    // EIGENVALUES
     cout << "Lowest eigenvalues:" << endl;
-    for (int i = 0; i < 5; i++){
-        cout << eigval(i) << endl;
+    double omega = 0.05;
+    double omega_e = sqrt(3)*omega;
+
+    for (int i = 0; i < 3; i++){
+        double eigval_analytic = V(i+1) + sqrt(3)*omega_e*0.5;
+        cout << "Numeric: " << eigval(i) << "\t" << "Analytic: " << eigval_analytic << endl;
     }
 
     finish_armadillo = clock(); // final time
     cout << "Time: " << "\t" << ((finish_armadillo - start_armadillo)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
 
 
+    // 1st EIGENVECTOR
+    cout << "1st eigenvector:" << endl;
+    ofstream file("Eigenvectors_" + to_string(omega) + ".txt");
+    vec Eigvec(n);
+    vec wave_func(n);
+
+    double beta_e_e = 1.44; // [eV nm]
+    double alpha = 1.0/beta_e_e; //alpha = h_bar*h_bar/(m*beta_e_e);
+
+    for(int i = 0; i<n; i++){
+        Eigvec(i) = eigvec(i,i);
+        cout << eigvec(i) << endl;
+
+        // Analytical solution:
+        double r = rho(i)*alpha;
+        wave_func(i) = (omega_e/3.14) * exp(-0.5*omega_e*r*r); // pow-func
+
+        //file << rho(i) << "\t" << Eigvec(i) << endl; // Write solution to file
+    }
+
+    file.close();
+    cout << "Wave function:" << endl;
+    cout << wave_func << endl;
+
 
     // OUR ALGORITHM
-    cout << endl << "OUR ALGORITHM" << endl;
+    cout << endl << "OUR ALGORITHM:" << endl;
     clock_t start, finish; // declare start and final time
     start = clock();
 
-    mat R = zeros<mat>(n,n); // Eigenvector matrix
+    // Set up eigenvector matrix
+    mat R = zeros<mat>(n,n);
     for (int i = 0; i < n; i++){
         for (int j = 0; j < n; j++){
             if (i == j){
@@ -183,6 +212,7 @@ int main()
     double epsilon = 1.0e-10; // tolerance
     double max_number_iterations = 50 * (double) n * (double) n * (double) n;
     cout << "Max no. iterations: " << max_number_iterations << endl;
+
     double max_offdiag = maxoffdiag(B, &k, &l, n);
 
     while (fabs (max_offdiag) > epsilon && (double) iterations < max_number_iterations){
@@ -192,13 +222,14 @@ int main()
     }
     cout << "Number of iterations: " << iterations << endl;
 
+    // Eigenvalues
     vec Eigval(n);
     for (int i = 0; i < n; i++){
         Eigval(i) = B(i,i);
     }
 
     Eigval = sort(Eigval,"ascend");
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 3; i++){
         cout << Eigval(i) << endl;
     }
 
