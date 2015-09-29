@@ -201,7 +201,7 @@ The number of similarity transformation needed for the non-diagonal matrix eleme
 	\hline
 \end{tabular}
 \end{center}
-where the time is for our algorithm. Using Armadillo resulted in 0 seconds for all of the above $n$-values.
+where the time is for our algorithm. Using Armadillo resulted in 0 seconds for all of the above $n$-values. Both methods give similar results for the eigenvalues.
 
 Estimate the number of transformations and extract a behavior as function of the dimensionality of the matrix ... ??
 
@@ -215,6 +215,21 @@ Why choose $t$ to be the smaller of the roots ...?
 For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). 
 
 ...
+
+For $n = 100$ and $\rho_{\textrm{max}} = 4.0$ we find:
+
+\begin{center}
+\begin{tabular}{ l l }\hline
+	$\omega_r$ 			& $\lambda_0$		 	\\ \hline
+	0.01 					& 1.1642 				\\
+	0.5 					& 2.25546 			\\
+	1 					& 4.05741 			\\
+	5 					& 17.4356 			\\
+	\hline
+\end{tabular}
+\end{center}
+
+..
 
 Plot of wave function for two electrons as a function of relative coordinates $r$ and different values of $\omega_r$: ...
 
