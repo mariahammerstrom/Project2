@@ -24,11 +24,15 @@ using namespace arma;
 // FUNCTIONS
 
 // Calculates and return the value of the potential for a given value of x.
-double potential(double x){
-    //double omega = 5.0;
-    //return omega*omega*x*x + 1./x;
+double potential_HO(double x){
     return x*x;
 }
+
+
+double potential_C(double x, double omega){
+    return omega*omega*x*x + 1./x;
+}
+
 
 // Find maximum matrix element
 double maxoffdiag(mat A, int * k, int * l, int n){
@@ -99,10 +103,11 @@ mat rotate (mat A, mat R, int k, int l, int n){
 int main()
 {
     // CONSTANTS
-    int n = 10; // number of steps
+    int n = 200; // number of steps
     double rho_min = 0.0; // minimum value
-    double rho_max = 4.0; // maximum value (set by the user)
+    double rho_max = 10.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
+    double omega = 0.01;
 
     double e = -1.0/(h*h); // non-diagonal constant
     double d = 2.0/(h*h); // diagonal constant
@@ -111,12 +116,12 @@ int main()
     cout << "rho_min = " << rho_min << endl;
     cout << "rho_max = " << rho_max << endl;
     cout << "No. of steps = " << n << endl;
+    cout << "Omega = " << omega << endl;
     cout << endl;
 
 
     // ARMADILLO SOLVER
     cout << "ARMADILLO:" << endl;
-
     clock_t start_armadillo, finish_armadillo; // declare start and final time for Armadillo solver
     start_armadillo = clock();
 
@@ -126,7 +131,7 @@ int main()
 
     for (int i = 0; i < n+1; i++){
         rho(i) = rho_min + (i)*h;
-        V(i) = potential(rho(i));
+        V(i) = potential_C(rho(i),omega);
     }
 
     // Set up tridiagonal matrix A
@@ -145,19 +150,19 @@ int main()
     A(n-1,n-1) = d + V(n);
     mat B = A; // copy matrix for use with our algorithm
 
-    // Diagonalize and find eigenvalues
+
+    // EIGENVALUES
+    cout << "Lowest eigenvalues:" << endl;
     vec eigval;
     mat eigvec;
 
     eig_sym(eigval,eigvec,A);
 
-    // EIGENVALUES
-    cout << "Lowest eigenvalues:" << endl;
-    double omega = 0.05;
     double omega_e = sqrt(3)*omega;
+    double V_0 = 2*((3./2)*pow(omega/2.,2./3));
 
     for (int i = 0; i < 3; i++){
-        double eigval_analytic = V(i+1) + sqrt(3)*omega_e*0.5;
+        double eigval_analytic = V_0 + omega_e*(i + 0.5); // analytical eigenvalue
         cout << "Numeric: " << eigval(i) << "\t" << "Analytic: " << eigval_analytic << endl;
     }
 
@@ -166,28 +171,16 @@ int main()
 
 
     // 1st EIGENVECTOR
-    cout << "1st eigenvector:" << endl;
-    ofstream file("Eigenvectors_" + to_string(omega) + ".txt");
-    vec Eigvec(n);
-    vec wave_func(n);
-
-    double beta_e_e = 1.44; // [eV nm]
-    double alpha = 1.0/beta_e_e; //alpha = h_bar*h_bar/(m*beta_e_e);
+    ofstream file("Eigenvectors_" + to_string(omega) + ".txt"); // File for wave function
+    ofstream file2("Eigenvectors2_" + to_string(omega) + ".txt"); // File for wave function squared
 
     for(int i = 0; i<n; i++){
-        Eigvec(i) = eigvec(i,i);
-        cout << eigvec(i) << endl;
-
-        // Analytical solution:
-        double r = rho(i)*alpha;
-        wave_func(i) = (omega_e/3.14) * exp(-0.5*omega_e*r*r); // pow-func
-
-        //file << rho(i) << "\t" << Eigvec(i) << endl; // Write solution to file
+        file << rho(i) << "\t" << eigvec(i,0) << endl; // Write solution to file
+        file2 << rho(i) << "\t" << eigvec(i,0)*eigvec(i,0) << endl; // Write solution to file
     }
 
     file.close();
-    cout << "Wave function:" << endl;
-    cout << wave_func << endl;
+    file2.close();
 
 
     // OUR ALGORITHM
@@ -222,15 +215,17 @@ int main()
     }
     cout << "Number of iterations: " << iterations << endl;
 
+
     // Eigenvalues
     vec Eigval(n);
     for (int i = 0; i < n; i++){
         Eigval(i) = B(i,i);
     }
 
+    cout << "Eigenvalues:" << endl;
     Eigval = sort(Eigval,"ascend");
     for (int i = 0; i < 3; i++){
-        cout << Eigval(i) << endl;
+        cout << Eigval(i) << endl; // Print out first 3 eigenvalues
     }
 
     finish = clock(); // final time
