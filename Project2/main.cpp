@@ -235,7 +235,12 @@ int main()
     // Tests
     // Orthogonallity of eigenvectors
     double x;
-    x = dot(eigvec(0,0),eigvec(1,0));
+    vec a,b;
+    for (int i=0;i<n;i++){
+        a(i) = eigvec(i,0);
+        b(i) = eigvec(i,1);
+    }
+    x = dot(a,b);
     if(x<10e-5) cout << "Orthogonallity: True" << endl;
     else cout << "Orthogonallity: False" << endl;
 
