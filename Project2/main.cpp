@@ -106,7 +106,7 @@ int main()
     double rho_min = 0.0; // minimum value
     double rho_max = 50.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
-    double omega = 5.0;
+    double omega = 0.01;
 
     double e = -1.0/(h*h); // non-diagonal constant
     double d = 2.0/(h*h); // diagonal constant
@@ -130,8 +130,8 @@ int main()
 
     for (int i = 0; i < n+1; i++){
         rho(i) = rho_min + (i)*h;
-        V(i) = potential_C(rho(i),omega);
-        //V(i) = potential_HO(rho(i));
+        //V(i) = potential_C(rho(i),omega);
+        V(i) = potential_HO(rho(i));
     }
 
     // Set up tridiagonal matrix A
@@ -159,10 +159,10 @@ int main()
     eig_sym(eigval,eigvec,A);
 
     double omega_e = sqrt(3)*omega;
-    double V_0 = 2*((3./2)*pow(omega/2.,2./3));
+    double V_0 = ((3./2)*pow(omega/2.,2./3));
 
     for (int i = 0; i < 3; i++){
-        double eigval_analytic = V_0 + omega_e*(i + 0.5); // analytical eigenvalue
+        double eigval_analytic = 2*(V_0 + omega_e*(i + 0.5)); // analytical eigenvalue
         cout << "Numeric: " << eigval(i) << "\t" << "Analytic: " << eigval_analytic << endl;
     }
 
@@ -231,15 +231,11 @@ int main()
     finish = clock(); // final time
     cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
 
-    // Tests
-    // Orthogonallity of eigenvectors
+    // Tests: Orthogonallity of eigenvectors
     double x,y,z;
     vec a(n);
     vec b(n);
     vec c(n);
-    double x;
-    vec a(n);
-    vec b(n);
     for (int i=0;i<n;i++){
         a(i) = eigvec(i,0);
         b(i) = eigvec(i,1);
@@ -248,8 +244,8 @@ int main()
     x = dot(a,b);
     y = dot(a,c);
     z = dot(b,c);
-    if(x<10e-5 && y<10e-5 && z<10e-5) cout << "Orthogonallity: True" << endl;
-    else cout << "Orthogonallity: False" << endl;
+    if(x<10e-5 && y<10e-5 && z<10e-5) cout << "Orthogonality: True" << endl;
+    else cout << "Orthogonality: False" << endl;
 
     return 0;
 }

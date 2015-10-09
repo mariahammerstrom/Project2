@@ -1,6 +1,6 @@
 % Plot data from C++
 
-n = 200;
+n = 1000;
 
 % Omega 5.00:
 omega = 5.00;
