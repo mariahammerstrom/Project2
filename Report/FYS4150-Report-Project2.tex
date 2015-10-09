@@ -264,9 +264,9 @@ For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 \begin{center}
 \begin{tabular}{ l l l l l }\hline
 	$\omega_r$ 	& 0.01		& 0.5				& 1.0		&5.0\\ \hline
-	$\epsilon_0^{'}$ 	& 0.105041	& 2.05658		& 3.62193	& 14.1863\\
-	$\epsilon_1^{'}$ 	& 0.139682	& 3.78863		& 7.08603& 31.5068 \\
-	$\epsilon_2^{'}$ 	& 0.174323	& 5.52068		& 10.5501	& 48.8273\\
+	$\varepsilon_0^{'}$ 	& 0.105041	& 2.05658		& 3.62193	& 14.1863\\
+	$\varepsilon_1^{'}$ 	& 0.139682	& 3.78863		& 7.08603& 31.5068 \\
+	$\varepsilon_2^{'}$ 	& 0.174323	& 5.52068		& 10.5501	& 48.8273\\
 	\hline
 \end{tabular}
 \end{center}
@@ -274,7 +274,7 @@ We see that the analytic and numerical eigenvalues correspond quite nicely for a
 
 We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
 
-For the case of $\omega_r = 0.01$, the chosen value of $\rho_{max}$ is important. $\rho_{max}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{max} = 40$.
+For the case of $\omega_r = 0.01$, the chosen value of $\rho_{\mathrm{max}}$ is important. $\rho_{\mathrm{max}}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{\mathrm{max}} = 40$.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png} 	
