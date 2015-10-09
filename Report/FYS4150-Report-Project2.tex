@@ -299,10 +299,21 @@ In our code we have used several tests to make sure that the results are sound. 
 \end{itemize}
 
 
+%To test our code we embedded three tests. 
+%For $n=2$ we checked that the matrix was only rotated once.
+%
+%We checked orthogonality of the three first eigenvectors of each case.
+%
+%Comparing with an approximate analytic values. As these values were approximate, we expected they to be a little different from our numerical values.
+
+
 
 
 \section{Conclusions}
-...
+%We found that Armadillo is faster than the brute force approach of Jacobi iterations.
+The number of iterations needed to find the eigenvalues of an $n\times n$ matrix was found to be approximately $n^2.1$.
+For higher values of $\omega_r$, the relative distance between the two electrons decreased.
+%Increasing $\rho_{\mathrm{max}}$ seemed to only have an effect when $\omega_r = 0.01$.
 
 
 
