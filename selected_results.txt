@@ -1,27 +1,56 @@
 SELECTED RESULTS
 
+//////////////////////////////////////////////
+HARMONIC OSCILLATOR (without Coulomb interactions):
 
-HARMONIC OSCILLATOR:
-
+INITIAL CONDITIONS:
 rho_min = 0
-rho_max = 4
-No. of steps = 50
+rho_max = 50
+No. of steps = 200
+Omega = 0.01
 
-ARMADILLO
+ARMADILLO:
 Lowest eigenvalues:
-2.99802
-6.99206
-11.0292
-15.3973
-20.6
+Numeric: 2.98033	Analytic: 0.105041
+Numeric: 6.9009	Analytic: 0.139682
+Numeric: 10.7562	Analytic: 0.174323
 Time: 	0 seconds
 
-OUR ALGORITHM
-Max no. iterations: 6.25e+06
-Number of iterations: 4378
-2.99802
-6.99206
-11.0292
-15.3973
-20.6
+OUR ALGORITHM:
+Max no. iterations: 4e+08
+Number of iterations: 16470
+Eigenvalues:
+2.98033
+6.9009
+10.7562
+Time: 	4 seconds
+Orthogonality: True
+
+
+//////////////////////////////////////////////
+
+HARMONIC OSCILLATOR (with Coulomb interactions):
+
+
+INITIAL CONDITIONS:
+rho_min = 0
+rho_max = 50
+No. of steps = 200
+Omega = 0.01
+
+ARMADILLO:
+Lowest eigenvalues:
+Numeric: 0.105773	Analytic: 0.105041	Analytic2: 0.03
+Numeric: 0.141504	Analytic: 0.139682	Analytic2: 0.07
+Numeric: 0.178008	Analytic: 0.174323	Analytic2: 0.11
 Time: 	0 seconds
+
+OUR ALGORITHM:
+Max no. iterations: 4e+08
+Number of iterations: 66676
+Eigenvalues:
+0.105773
+0.141504
+0.178008
+Time: 	19 seconds
+Orthogonality: True
