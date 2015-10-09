@@ -105,9 +105,9 @@ int main()
     // CONSTANTS
     int n = 200; // number of steps
     double rho_min = 0.0; // minimum value
-    double rho_max = 10.0; // maximum value (set by the user)
+    double rho_max = 50.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
-    double omega = 0.01;
+    double omega = 1.0;
 
     double e = -1.0/(h*h); // non-diagonal constant
     double d = 2.0/(h*h); // diagonal constant
@@ -132,6 +132,7 @@ int main()
     for (int i = 0; i < n+1; i++){
         rho(i) = rho_min + (i)*h;
         V(i) = potential_C(rho(i),omega);
+        //V(i) = potential_HO(rho(i));
     }
 
     // Set up tridiagonal matrix A

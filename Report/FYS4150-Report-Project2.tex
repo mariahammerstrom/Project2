@@ -168,6 +168,18 @@ where \textbf{A} is the matrix in our given problem, and \textbf{S} is an $(n \t
 \end{equation*} 
 The recipe is to choose $\theta$ so that all non-diagonal matrix elements $b_{kl}$ become zero. 
 
+In the algorithm we define the quantities tan $\theta = t = s/c$ with $s$ = sin $\theta$ and $c$ = cos $\theta$. By some manipulations, we can write:
+
+\begin{equation}\label{eq:cos}
+	c = \frac{1}{\sqrt{1+t^2}}.
+\end{equation}
+This is used to calculate the difference between matrices \textbf{B} and \textbf{A}, which we want to minimize:
+
+\begin{equation}
+	||{\bf B}-{\bf A}||_F^2=4(1-c)\sum_{i=1,i\ne k,l}^n(a_{ik}^2+a_{il}^2) +\frac{2a_{kl}^2}{c^2}.
+\end{equation}
+In order to minimize this equation, $c$ should be as close to 1 as possible. Making $t$ as small as possible, will create this effect, as seen in Eq. (\ref{eq:cos}).
+
 The \textbf{algorithm} can be described as follows: 
 
 \begin{itemize}
@@ -188,7 +200,7 @@ In addition to solving the problem in a brute-force way using Jacobi's method, w
 \subsection{Harmonic oscillator}
 In the case of the harmonic oscillator there is an analytical solution to what the lowest eigenvalues should be. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
 
-In order to get the lowest three eigenvalues with four leading digits, we need at least $n_{\textrm{step}} = 30$. Then the lowest three eigenvalues are: $\lambda_0 = 2.965, \lambda_1 = 6.821$ and $\lambda_2 = 10.56$ using $\rho_{\textrm{max}} = 10.0$. 
+In order to get the lowest three eigenvalues with four leading digits, we need around $n_{\textrm{step}} = 200$. Then the lowest three eigenvalues are: $\lambda_0 = 2.999, \lambda_1 = 6.99$ and $\lambda_2 = 10.99$ using $\rho_{\textrm{max}} = 10.0$. 
 
 The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. By testing we find that a lower $\rho_{\textrm{max}}$ makes the eigenvalues is more precise for $\rho_{\textrm{max}} = 4.0$, but gets worse for lower values, making the eigenvalues larger than they should be. For values higher than 10.0 the eigenvalues also are bad, becoming too small.
 
@@ -215,12 +227,6 @@ We want to estimate the number of transformations and extract a behavior as func
 	\captionof{figure}{Number of iterations as a function of $n$, approximated by $n^{2.1}$ (blue).}
 	\label{fig:iterations}
 \end{center}
-
-
-Why choose $t$ to be the smaller of the roots ...? (Explain what $t$ is.)
-
-...
-
 From comparisons with analytical solutions, we see that our program is working well and we can proceed with the next potential of interest.
 
 
@@ -228,30 +234,39 @@ From comparisons with analytical solutions, we see that our program is working w
 \subsection{Harmonic oscillator with Coulomb interactions}
 Next we want to study the harmonic oscillator with Coulomb interactions. For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). Thus, we can compare our numerical solution with the analytical solution, given as:
 
-...
+\begin{equation}
+\begin{aligned}
+	V_0 &= \frac{3}{2} \bigg[ \frac{\omega_r}{2} \bigg]^{2/3} \\
+	\omega_e &= \sqrt{3} \omega_r \\
+	\epsilon_m^{'} &= V_0 + \omega_e [m + \frac{1}{2}] \textrm{,       } m = 0,1, \dots
+\end{aligned}
+\end{equation}
+where $\epsilon_m^{'}$ gives the analytical eigenvalues.
 
 For $n = 200$ and $\rho_{\textrm{max}} = 10.0$ we find:
 
 \begin{center}
 \begin{tabular}{ l l l }\hline
-	$\omega_r$ 			& $\lambda_0$			& $\lambda_{\textrm{analytic}}$	 	\\ \hline
-	0.01 					& 0.309546 			& 0.105041				\\
+	$\omega_r$ 			& $\lambda_0$			& $\epsilon_0^{'}$	 	\\ \hline
+	0.01 					& 0.309546 			& 0.105041			\\
 	0.5 					& 2.22992				& 2.05658 			\\
 	1 					& 4.05706				& 3.62193 			\\
 	5 					& 17.4282				& 14.1863 			\\
 	\hline
 \end{tabular}
 \end{center}
-We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$. COMMENT.
+We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$ (stronger oscillator potential). According to the article we should have used a different expression for $\epsilon_m^{'}$ for large values of $\omega_r$. COMMENT.
 
-We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. COMMENT.
+We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
+
+For the case of $\omega_r = 0.01$, the chosen value of $\rho_{max}$ is important. $\rho_{max}$ needs to be quite large to make the plot come out right. We landed on $\rho_{max} = 40$.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png} 	
 	\captionof{figure}{The wave function.}
 	\label{fig:wave_function}
 \end{center}
-By plotting the squared of the eigenvector values, we get the probability distribution, shown in Fig.~\ref{fig:prob_dist}. COMMENT.
+By plotting the squared of the eigenvector values, we get the probability distribution, shown in Fig.~\ref{fig:prob_dist}. The figure shows the probability that the electrons will be in a given distance $\rho$.  COMMENT.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribution.png} 	
