@@ -2,7 +2,7 @@
 
 In this project we compute the eigenvalues for the 3D harmonic oscillator with and without Coulomb interactions using a brute force Jacobi's method, as well as the numerical package Armadillo. Our results correspond with known analytical solutions.
 
-This project consist of:
+This project consists of:
 
 ###Project2 (folder)
 Contains the project code (C++) and selected results for runs of the code for the two different potentials.
