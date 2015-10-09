@@ -58,7 +58,7 @@ with $n=0,1,2,\dots$ and $l=0,1,2,\dots$. In this project we use $l = 0$, which 
 
 We will solve Eq. (\ref{eq:schrod_radial}) by reformulating it in a discretized form as an eigenvalue equation to be solved with Jacobi's method. 
 
-After some substitutions and introducing the dimensionless variable $\rho = (1/ \alpha) r$ where $\alpha$ is of dimension length, we can rewrite Eq. (\ref{eq:schrod_radial}) as
+After some substitutions and introducing the dimensionless variable $\rho = r/ \alpha$ where $\alpha$ is of dimension length, we can rewrite Eq. (\ref{eq:schrod_radial}) as
 
 \begin{equation*}
 	-\frac{d^2}{d\rho^2} u(\rho) + \rho^2u(\rho)  = \lambda u(\rho) .
@@ -189,12 +189,12 @@ Making $t$ as small as possible, will make $c$ as close to 1 as possible, as see
 The \textbf{algorithm} for Jacobi's method can be described as follows: 
 
 \begin{itemize}
-	\item Choose a tolerance $\varepsilon$, typically $10^{-8}$ or smaller.
+	\item Choose a tolerance $\epsilon$, typically $10^{-8}$ or smaller.
 	\item Find matrix element $a_{kl}$ with the largest value and its indices $k$ and $l$.
-	\item Check that max$(a_{kl}^2) > \varepsilon$ for the off-diagonal matrix elements.
+	\item Check that max$(a_{kl}^2) > \epsilon$ for the off-diagonal matrix elements.
 	\item Compute $\tau$, sin $\theta$, cos $\theta$, tan $\theta$.
 	\item Compute the similarity transformations for this set of values for $(k,l)$, which will create a new matrix, \textbf{B} = \textbf{S}$(k,l,\theta)^T$\textbf{A}\textbf{S}$(k,l,\theta)$.
-	\item Continue to follow these steps until max$(a_{kl}^2) > \varepsilon$ is no longer the case.
+	\item Continue to follow these steps until max$(a_{kl}^2) > \epsilon$ is no longer the case.
 \end{itemize}
 
 \subsection{Numerical library}
@@ -240,14 +240,14 @@ From comparisons with analytical solutions, we see that our program is working w
 \subsection{Harmonic oscillator with Coulomb interactions}
 Next we want to study the harmonic oscillator with Coulomb interactions. For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). Thus, we can compare our numerical solution with the analytical solution, given as:
 
-\begin{equation}
+\begin{equation}\label{eq:analytical}
 \begin{aligned}
 	V_0 &= \frac{3}{2} \bigg[ \frac{\omega_r}{2} \bigg]^{2/3} \\
 	\omega_e &= \sqrt{3} \omega_r \\
 	\varepsilon_m^{'} &= V_0 + \omega_e [m + \frac{1}{2}] \textrm{,       } m = 0,1, \dots
 \end{aligned}
 \end{equation}
-where $\varepsilon_m^{'}$ gives the analytical eigenvalues.
+where $2\varepsilon_m^{'}$ gives the analytical eigenvalues.
 
 For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 
@@ -272,7 +272,7 @@ For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 \end{center}
 We see that the analytic and numerical eigenvalues correspond quite nicely for all $\omega_r$, though the analytical eigenvalues are generally lower in value than the numerical eigenvalues.
 
-We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig. \ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
+We calculate the eigenvectors for the ground state using Armadillo's \verb@eig_sym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig. \ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
 
 For the case of $\omega_r = 0.01$, the chosen value of $\rho_{\mathrm{max}}$ is important. $\rho_{\mathrm{max}}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{\mathrm{max}} = 40$.
 
@@ -300,9 +300,7 @@ In our code we have used several tests to make sure that the results are sound. 
 \end{itemize}
 For the last one, we only included the eigenvectors for the three lowest eigenvalues for each case.
 
-The expression for the analytical values was approximate. In table 1 in the article by Taut, we see that this value ($\varepsilon'_T$) differs from the true value of the energy ($\varepsilon'$). It is thus expected that our results vary from those calculated by Taut.
-
-
+The expression for the analytical values, Eq. (\ref{eq:analytical}), was approximate. In table 1 in the article by Taut, we see that this value ($\varepsilon'_T$) differs from the true value of the energy ($\varepsilon'$). It is thus expected that our results vary from those calculated by Taut.
 
 
 \section{Conclusions}
@@ -310,7 +308,7 @@ We found that Armadillo is faster than the brute force approach of Jacobi iterat
 In the case of a harmonic oscillator, using Jacobi iterations, we needed $n=200$ in order to get the three lowest eigenvalues with four leading digits. The number of iterations needed to find the eigenvalues of an $n\times n$ matrix was found to be approximately $n^{2.1}$.
 
 In the case of interacting electrons, we found that for higher values of $\omega_r$, the relative distance $\rho$ between the two electrons decreased, see figure \ref{fig:prob_dist}.
-%Increasing $\rho_{\mathrm{max}}$ seemed to only have an effect when $\omega_r = 0.01$.
+Increasing $\rho_{\mathrm{max}}$ seemed to only have an effect when $\omega_r = 0.01$.
 
 
 
