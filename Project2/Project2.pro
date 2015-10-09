@@ -5,9 +5,11 @@ CONFIG -= qt
 
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -larmadillo
+LIBS += -lunittest++
 
 SOURCES += main.cpp \
-    lib.cpp
+    lib.cpp \
+    tests.cpp
 
 HEADERS += \
     lib.h
