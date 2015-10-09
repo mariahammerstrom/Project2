@@ -15,6 +15,9 @@
 \usepackage{subcaption}
 \usepackage{multirow}
 
+\usepackage[font=small,labelfont={sf,bf}]{caption}
+
+
 \usepackage{titlesec}
 \titleformat{\section}{\fontfamily{phv}\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\fontfamily{phv}\fontsize{10}{15}\itshape}{\thesubsection}{1em}{}
@@ -176,6 +179,8 @@ The \textbf{algorithm} can be described as follows:
 	\item Continue to follow these steps until max$(a_{kl}^2) > \epsilon$ is no longer the case.
 \end{itemize}
 
+\subsection{Numerical library}
+In addition to solving the problem in a brute-force way using Jacobi's method, we have also used the numerical library Armadillo, and compared the results from these two methods.
 
 
 
@@ -183,55 +188,76 @@ The \textbf{algorithm} can be described as follows:
 \subsection{Harmonic oscillator}
 In the case of the harmonic oscillator there is an analytical solution to what the lowest eigenvalues should be. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
 
-In order to get the lowest three eigenvalues with four leading digits, we need at least $n_{\textrm{step}} = 30$. Then the lowest three eigenvalues are:$\lambda_0 = 2.965, \lambda_1 = 6.821$ and $\lambda_2 = 10.56$ using $\rho_{\textrm{max}} = 10.0$. 
+In order to get the lowest three eigenvalues with four leading digits, we need at least $n_{\textrm{step}} = 30$. Then the lowest three eigenvalues are: $\lambda_0 = 2.965, \lambda_1 = 6.821$ and $\lambda_2 = 10.56$ using $\rho_{\textrm{max}} = 10.0$. 
 
 The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. By testing we find that a lower $\rho_{\textrm{max}}$ makes the eigenvalues is more precise for $\rho_{\textrm{max}} = 4.0$, but gets worse for lower values, making the eigenvalues larger than they should be. For values higher than 10.0 the eigenvalues also are bad, becoming too small.
 
-The number of similarity transformation needed for the non-diagonal matrix elements to become zero depends on the dimensionality of the matrix. An upper limit to the allowed number of similarity transformations is in the range $12n^3 - 20n^3$. We have set the limit to $50n^3$ to be on the safe side. When running the code, the number of transformations is counted. For different dimensionalities we find (for $\rho_{\textrm{max}} = 4.0$):
+The number of similarity transformation needed for the non-diagonal matrix elements to become zero depends on the dimensionality of the matrix. An upper limit to the allowed number of similarity transformations is in the range $12n^3 - 20n^3$. We have set the limit to $50n^3$ to be on the safe side. When running the code, the number of transformations is counted. For different dimensionalities we find (for $\rho_{\textrm{max}} = 10.0$):
 
 \begin{center}
-\begin{tabular}{ l l l l}\hline
-	$n$ 			& No. of iterations	& No. of iterations / $n$ 	& Time (s) \\ \hline
-	5 			& 28 				& 5.6					& 0\\
-	10 			& 42 				& 4.2					& 0\\
-	20 			& 676 			& 33.8				& 0\\
-	50 			& 4378 			& 87.56				& 0\\
-	100	  		& 17789			& 177.89				& 1 \\
-	200  			& 72044			& 360.22				& 20 \\
+\begin{tabular}{ l l l}\hline
+	$n$ 			& No. of iterations	 	& Time (s) \\ \hline
+	5 			& 11 					& 0\\
+	10 			& 41					& 0\\
+	20 			& 176 				& 0\\
+	50 			& 1727 				& 0\\
+	100	  		& 11315				& 0 \\
+	200  			& 61308				& 17 \\
 	\hline
 \end{tabular}
 \end{center}
-where the time is for our algorithm. Using Armadillo resulted in 0 seconds for all of the above $n$-values. Both methods give similar results for the eigenvalues.
+where the time is for our algorithm. Using Armadillo resulted in 0 seconds for all of the above $n$-values. Both methods give similar results for the eigenvalues. See \verb@selected_results.txt@ to see output examples.
 
-Estimate the number of transformations and extract a behavior as function of the dimensionality of the matrix ... ??
+We want to estimate the number of transformations and extract a behavior as function of the dimensionality of the matrix. The relationship between $n$ and number of iterations are plotted in Fig.~\ref{fig:iterations} where the blue line represents the output from our code and the red line is an approximation of $n^{2.1}$ we found to be a nice fit.
 
-Why choose $t$ to be the smaller of the roots ...?
+\begin{center}
+	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/iterations.png} 	
+	\captionof{figure}{Number of iterations as a function of $n$, approximated by $n^{2.1}$ (blue).}
+	\label{fig:iterations}
+\end{center}
+
+
+Why choose $t$ to be the smaller of the roots ...? (Explain what $t$ is.)
 
 ...
+
+From comparisons with analytical solutions, we see that our program is working well and we can proceed with the next potential of interest.
 
 
 
 \subsection{Harmonic oscillator with Coulomb interactions}
-For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). 
+Next we want to study the harmonic oscillator with Coulomb interactions. For specific oscillator frequencies there is an analytical answer to Eq. (\ref{eq:coulomb}), described in the article by M. Taut, Phys. Rev. A 48, 3561 - 3566 (1993). Thus, we can compare our numerical solution with the analytical solution, given as:
 
 ...
 
-For $n = 100$ and $\rho_{\textrm{max}} = 4.0$ we find:
+For $n = 200$ and $\rho_{\textrm{max}} = 10.0$ we find:
 
 \begin{center}
-\begin{tabular}{ l l }\hline
-	$\omega_r$ 			& $\lambda_0$		 	\\ \hline
-	0.01 					& 1.1642 				\\
-	0.5 					& 2.25546 			\\
-	1 					& 4.05741 			\\
-	5 					& 17.4356 			\\
+\begin{tabular}{ l l l }\hline
+	$\omega_r$ 			& $\lambda_0$			& $\lambda_{\textrm{analytic}}$	 	\\ \hline
+	0.01 					& 0.309546 			& 0.105041				\\
+	0.5 					& 2.22992				& 2.05658 			\\
+	1 					& 4.05706				& 3.62193 			\\
+	5 					& 17.4282				& 14.1863 			\\
 	\hline
 \end{tabular}
 \end{center}
+We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$. COMMENT.
 
-..
+We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. COMMENT.
 
-Plot of wave function for two electrons as a function of relative coordinates $r$ and different values of $\omega_r$: ...
+\begin{center}
+	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png} 	
+	\captionof{figure}{The wave function.}
+	\label{fig:wave_function}
+\end{center}
+By plotting the squared of the eigenvector values, we get the probability distribution, shown in Fig.~\ref{fig:prob_dist}. COMMENT.
+
+\begin{center}
+	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribution.png} 	
+	\captionof{figure}{The normalized probability distribution.}
+	\label{fig:prob_dist}
+\end{center}
 
 
 \subsection{Unit tests}
