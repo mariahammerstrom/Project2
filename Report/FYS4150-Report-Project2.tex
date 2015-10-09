@@ -31,7 +31,8 @@
 \maketitle
 
 \begin{abstract}
-	\noindent \lipsum[1]
+	\noindent We compute the eigenvalues for the 3D harmonic oscillator with and without Coulomb interactions using a brute force Jacobi's method, as well as the numerical package Armadillo. Our results correspond with known analytical solutions.
+	%\lipsum[1]
 	\vspace*{2ex}
 	
 	\noindent \textbf{Github:} \textit{https://github.com/mariahammerstrom/Project2}
@@ -53,7 +54,7 @@ In our case $V(r)$ is the harmonic oscillator potential $(1/2)kr^2$ with $k=m\om
 \begin{equation*}
 	E_{nl}=  \hbar \omega \left(2n+l+\frac{3}{2}\right),
 \end{equation*}
-with $n=0,1,2,\dots$ and $l=0,1,2,\dots$. In this project we use $l = 0$. 
+with $n=0,1,2,\dots$ and $l=0,1,2,\dots$. In this project we use $l = 0$, which means we are studying the ground state. 
 
 We will solve Eq. (\ref{eq:schrod_radial}) by reformulating it in a discretized form as an eigenvalue equation to be solved with Jacobi's method. 
 
@@ -175,12 +176,17 @@ In the algorithm we define the quantities tan $\theta = t = s/c$ with $s$ = sin 
 \end{equation}
 This is used to calculate the difference between matrices \textbf{B} and \textbf{A}, which we want to minimize:
 
-\begin{equation}
+\begin{equation*}
 	||{\bf B}-{\bf A}||_F^2=4(1-c)\sum_{i=1,i\ne k,l}^n(a_{ik}^2+a_{il}^2) +\frac{2a_{kl}^2}{c^2}.
-\end{equation}
-In order to minimize this equation, $c$ should be as close to 1 as possible. Making $t$ as small as possible, will create this effect, as seen in Eq. (\ref{eq:cos}).
+\end{equation*}
+In order to minimize this equation, $c$ should be as close to 1 as possible. $c$ depends on $t$, which is expressed as: 
 
-The \textbf{algorithm} can be described as follows: 
+\begin{equation}\label{eq:tan}
+	t = -\tau \pm \sqrt{1+\tau^2}.
+\end{equation}
+Making $t$ as small as possible, will make $c$ as close to 1 as possible, as seen from Eq. (\ref{eq:cos}). That means choosing the smaller of the roots in Eq. (\ref{eq:tan}).
+
+The \textbf{algorithm} for Jacobi's method can be described as follows: 
 
 \begin{itemize}
 	\item Choose a tolerance $\epsilon$, typically $10^{-8}$ or smaller.
@@ -198,13 +204,13 @@ In addition to solving the problem in a brute-force way using Jacobi's method, w
 
 \section{Results}
 \subsection{Harmonic oscillator}
-In the case of the harmonic oscillator there is an analytical solution to what the lowest eigenvalues should be. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
+In the case of the harmonic oscillator there is an analytical solution for the lowest eigenvalues. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
 
 In order to get the lowest three eigenvalues with four leading digits, we need around $n_{\textrm{step}} = 200$. Then the lowest three eigenvalues are: $\lambda_0 = 2.999, \lambda_1 = 6.99$ and $\lambda_2 = 10.99$ using $\rho_{\textrm{max}} = 10.0$. 
 
-The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. By testing we find that a lower $\rho_{\textrm{max}}$ makes the eigenvalues is more precise for $\rho_{\textrm{max}} = 4.0$, but gets worse for lower values, making the eigenvalues larger than they should be. For values higher than 10.0 the eigenvalues also are bad, becoming too small.
+The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. By testing we find that a lower $\rho_{\textrm{max}}$ makes the eigenvalues more precise, say $\rho_{\textrm{max}} = 4.0$, but gets worse for values lower than this, making the eigenvalues larger than they should be. For values higher than 10.0 the eigenvalues also are bad, becoming too small.
 
-The number of similarity transformation needed for the non-diagonal matrix elements to become zero depends on the dimensionality of the matrix. An upper limit to the allowed number of similarity transformations is in the range $12n^3 - 20n^3$. We have set the limit to $50n^3$ to be on the safe side. When running the code, the number of transformations is counted. For different dimensionalities we find (for $\rho_{\textrm{max}} = 10.0$):
+The number of similarity transformation needed for the non-diagonal matrix elements to become zero depends on the dimensionality of the matrix. An upper limit to the allowed number of similarity transformations is in the range $12n^3 - 20n^3$ according to the lecture notes. We have set the limit to $50n^3$ in our code to be on the safe side. When running the code, the number of transformations is counted. For different dimensionalities we find (for $\rho_{\textrm{max}} = 10.0$):
 
 \begin{center}
 \begin{tabular}{ l l l}\hline
@@ -257,15 +263,14 @@ For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 
 \begin{center}
 \begin{tabular}{ l l l l l }\hline
-	$\omega_r$ 	& 0.01		& 0.5			& 1.0		&5.0\\ \hline
-	$\epsilon_0^{'}$ 	& 0.0963808	& 1.62356		& 2.75591	& 9.85617\\
-	$\epsilon_1^{'}$ 	& 0.113701	& 2.48959		& 4.48796	& 18.5164 \\
-	$\epsilon_2^{'}$ 	& 0.131022	& 3.35561		& 6.22001	& 27.1767\\
+	$\omega_r$ 	& 0.01		& 0.5				& 1.0		&5.0\\ \hline
+	$\epsilon_0^{'}$ 	& 0.105041	& 2.05658		& 3.62193	& 14.1863\\
+	$\epsilon_1^{'}$ 	& 0.139682	& 3.78863		& 7.08603& 31.5068 \\
+	$\epsilon_2^{'}$ 	& 0.174323	& 5.52068		& 10.5501	& 48.8273\\
 	\hline
 \end{tabular}
 \end{center}
-COMMENT!
-%We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$ (stronger oscillator potential). According to the article we should have used a different expression for $\epsilon_m^{'}$ for large values of $\omega_r$. COMMENT.
+We see that the analytic and numerical eigenvalues correspond quite nicely for all $\omega_r$, though the analytical eigenvalues are generally lower in value than the numerical eigenvalues.
 
 We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
 
@@ -276,7 +281,7 @@ For the case of $\omega_r = 0.01$, the chosen value of $\rho_{max}$ is important
 	\captionof{figure}{The wave function.}
 	\label{fig:wave_function}
 \end{center}
-By plotting the squared of the eigenvector values, we get the probability distribution, shown in Fig.~\ref{fig:prob_dist}. The figure shows the probability that the electrons will be in a given distance $\rho$.  COMMENT.
+By plotting the squared of the eigenvector values, we get the probability distribution, shown in Fig.~\ref{fig:prob_dist}. The figure shows the probability that the electrons will be in a given distance $\rho$.  For a smaller oscillator potential $\omega_r$ the electrons are more likely to be far apart, and vice versa.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribution.png} 	

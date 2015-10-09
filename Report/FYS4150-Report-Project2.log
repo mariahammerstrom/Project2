@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.15)  9 OCT 2015 12:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.15)  9 OCT 2015 13:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -516,15 +516,15 @@ LaTeX Font Info:    Try loading font information for U+txsyc on input line 31.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/txfonts/utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 45.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 46.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 45.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 46.
 
-Overfull \hbox (19.78989pt too wide) detected at line 119
+Overfull \hbox (19.78989pt too wide) detected at line 120
 [] [] \OT1/txr/m/n/10 = \OML/txmi/m/it/10 ^^U []
  []
 
@@ -532,17 +532,17 @@ Overfull \hbox (19.78989pt too wide) detected at line 119
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 147.
-LaTeX Font Info:    Try loading font information for OMS+txr on input line 186.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 148.
+LaTeX Font Info:    Try loading font information for OMS+txr on input line 192.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/txfonts/omstxr.fd
 File: omstxr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OMS/txr/m/n' in size <10> not available
-(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 186.
+(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 192.
  [2]
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 221
+LaTeX Font Info:    Try loading font information for OT1+txtt on input line 227
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/txfonts/ot1txtt.fd
@@ -555,20 +555,20 @@ ic file (type png)
 
 <use ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/iterations.png>
 Package pdftex.def Info: ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/i
-terations.png used on input line 226.
+terations.png used on input line 232.
 (pdftex.def)             Requested size: 256.0748pt x 192.05493pt.
-LaTeX Font Info:    Try loading font information for OT1+txss on input line 227
+LaTeX Font Info:    Try loading font information for OT1+txss on input line 233
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/txfonts/ot1txss.fd
 File: ot1txss.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 227.
+(Font)              scaled to size 8.54997pt on input line 233.
 LaTeX Font Info:    Font shape `OT1/txss/bx/n' in size <9> not available
-(Font)              Font shape `OT1/txss/b/n' tried instead on input line 227.
+(Font)              Font shape `OT1/txss/b/n' tried instead on input line 233.
 LaTeX Font Info:    Font shape `OT1/txss/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 227.
+(Font)              scaled to size 8.54997pt on input line 233.
 
 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png, id=22,
  578.16pt x 433.62pt>
@@ -577,7 +577,7 @@ aphic file (type png)
 
 <use ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png>
 Package pdftex.def Info: ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/w
-ave_function.png used on input line 275.
+ave_function.png used on input line 280.
 (pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
 
 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribution.
@@ -588,22 +588,22 @@ tion.png Graphic file (type png)
 <use ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribut
 ion.png>
 Package pdftex.def Info: ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/p
-robability_distribution.png used on input line 282.
+robability_distribution.png used on input line 287.
 (pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
  [3 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/iterations.png (PNG c
 opy)> <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png (
 PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
+Underfull \hbox (badness 10000) in paragraph at lines 313--314
 
  []
 
 [4 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distributi
 on.png (PNG copy)>] (./FYS4150-Report-Project2.aux) ) 
 Here is how much of TeX's memory you used:
- 6570 strings out of 493117
- 94802 string characters out of 6135433
- 288488 words of memory out of 5000000
- 9894 multiletter control sequences out of 15000+600000
+ 6571 strings out of 493117
+ 94810 string characters out of 6135433
+ 284497 words of memory out of 5000000
+ 9895 multiletter control sequences out of 15000+600000
  55275 words of font info for 128 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,11n,40p,597b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -621,7 +621,7 @@ live/2014/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/20
 mf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fo
 nts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/
 urw/times/utmri8a.pfb>
-Output written on FYS4150-Report-Project2.pdf (4 pages, 184674 bytes).
+Output written on FYS4150-Report-Project2.pdf (4 pages, 186463 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
