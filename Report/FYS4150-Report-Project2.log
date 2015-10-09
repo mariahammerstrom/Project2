@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.15)  9 OCT 2015 11:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.15)  9 OCT 2015 12:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -577,7 +577,7 @@ aphic file (type png)
 
 <use ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png>
 Package pdftex.def Info: ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/w
-ave_function.png used on input line 265.
+ave_function.png used on input line 275.
 (pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
 
 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribution.
@@ -588,12 +588,12 @@ tion.png Graphic file (type png)
 <use ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/probability_distribut
 ion.png>
 Package pdftex.def Info: ../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/p
-robability_distribution.png used on input line 272.
+robability_distribution.png used on input line 282.
 (pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
  [3 <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/iterations.png (PNG c
 opy)> <../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png (
 PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 308--309
 
  []
 
@@ -621,7 +621,7 @@ live/2014/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/20
 mf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fo
 nts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/
 urw/times/utmri8a.pfb>
-Output written on FYS4150-Report-Project2.pdf (4 pages, 189209 bytes).
+Output written on FYS4150-Report-Project2.pdf (4 pages, 184674 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream

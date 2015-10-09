@@ -243,23 +243,33 @@ Next we want to study the harmonic oscillator with Coulomb interactions. For spe
 \end{equation}
 where $\epsilon_m^{'}$ gives the analytical eigenvalues.
 
-For $n = 200$ and $\rho_{\textrm{max}} = 10.0$ we find:
+For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 
 \begin{center}
-\begin{tabular}{ l l l }\hline
-	$\omega_r$ 			& $\lambda_0$			& $\epsilon_0^{'}$	 	\\ \hline
-	0.01 					& 0.309546 			& 0.105041			\\
-	0.5 					& 2.22992				& 2.05658 			\\
-	1 					& 4.05706				& 3.62193 			\\
-	5 					& 17.4282				& 14.1863 			\\
+\begin{tabular}{ l l l l l }\hline
+	$\omega_r$ 	& 0.01		& 0.5		& 1.0	&5.0\\ \hline
+	$\lambda_0$ 	& 0.105773	& 2.22507		& 4.0372	& 16.9105\\
+	$\lambda_1$ 	& 0.141504	& 4.11139		& 7.81445	& 34.4305 \\
+	$\lambda_2$ 	& 0.178008	& 6.017		& 11.5845	& 49.9979\\
 	\hline
 \end{tabular}
 \end{center}
-We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$ (stronger oscillator potential). According to the article we should have used a different expression for $\epsilon_m^{'}$ for large values of $\omega_r$. COMMENT.
+
+\begin{center}
+\begin{tabular}{ l l l l l }\hline
+	$\omega_r$ 	& 0.01		& 0.5			& 1.0		&5.0\\ \hline
+	$\epsilon_0^{'}$ 	& 0.0963808	& 1.62356		& 2.75591	& 9.85617\\
+	$\epsilon_1^{'}$ 	& 0.113701	& 2.48959		& 4.48796	& 18.5164 \\
+	$\epsilon_2^{'}$ 	& 0.131022	& 3.35561		& 6.22001	& 27.1767\\
+	\hline
+\end{tabular}
+\end{center}
+COMMENT!
+%We see that the analytic and numerical eigenvalues correspond quite nicely for small $\omega_r$, but worsen for higher $\omega_r$ (stronger oscillator potential). According to the article we should have used a different expression for $\epsilon_m^{'}$ for large values of $\omega_r$. COMMENT.
 
 We calculate the eigenvectors for the ground state using Armadillo's \verb@eigsym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig.\ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
 
-For the case of $\omega_r = 0.01$, the chosen value of $\rho_{max}$ is important. $\rho_{max}$ needs to be quite large to make the plot come out right. We landed on $\rho_{max} = 40$.
+For the case of $\omega_r = 0.01$, the chosen value of $\rho_{max}$ is important. $\rho_{max}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{max} = 40$.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png} 	
@@ -276,7 +286,12 @@ By plotting the squared of the eigenvector values, we get the probability distri
 
 
 \subsection{Unit tests}
-...
+In our code we have used several tests to make sure that the results are sound. The tests include:
+
+\begin{itemize}
+	\item Checking that the rotation matrix only makes one rotation when $n = 2$.
+	\item Checking our results for the eigenvalues with analytical solutions.
+\end{itemize}
 
 
 
@@ -292,7 +307,10 @@ By plotting the squared of the eigenvector values, we get the probability distri
 
 The codes developed for this project are:\\
 
-...
+\noindent \verb@main.cpp@ -- main program, C++
+
+\noindent \verb@plotting.m@ -- plotting program, MATLAB
+
 \end{multicols}
 
 \end{document}
