@@ -48,10 +48,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../Project2/main.cpp \
-		../Project2/lib.cpp 
-OBJECTS       = main.o \
-		lib.o
+SOURCES       = ../Project2/main.cpp 
+OBJECTS       = main.o
 DIST          = /Applications/QT/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		/Applications/QT/5.5/clang_64/mkspecs/qdevice.pri \
 		/Applications/QT/5.5/clang_64/mkspecs/features/device_config.prf \
@@ -185,8 +183,7 @@ DIST          = /Applications/QT/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		/Applications/QT/5.5/clang_64/mkspecs/features/exceptions.prf \
 		/Applications/QT/5.5/clang_64/mkspecs/features/yacc.prf \
 		/Applications/QT/5.5/clang_64/mkspecs/features/lex.prf \
-		../Project2/Project2.pro lib.h ../Project2/main.cpp \
-		../Project2/lib.cpp
+		../Project2/Project2.pro  ../Project2/main.cpp
 QMAKE_TARGET  = Project2
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Project2
@@ -936,12 +933,8 @@ main.o: ../Project2/main.cpp /usr/local/include/armadillo \
 		/usr/local/include/armadillo_bits/spglue_plus_meat.hpp \
 		/usr/local/include/armadillo_bits/spglue_minus_meat.hpp \
 		/usr/local/include/armadillo_bits/spglue_times_meat.hpp \
-		/usr/local/include/armadillo_bits/compiler_setup_post.hpp \
-		../Project2/lib.h
+		/usr/local/include/armadillo_bits/compiler_setup_post.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Project2/main.cpp
-
-lib.o: ../Project2/lib.cpp ../Project2/lib.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lib.o ../Project2/lib.cpp
 
 ####### Install
 

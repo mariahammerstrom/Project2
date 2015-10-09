@@ -106,7 +106,7 @@ int main()
     double rho_min = 0.0; // minimum value
     double rho_max = 50.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
-    double omega = 1.0;
+    double omega = 5.0;
 
     double e = -1.0/(h*h); // non-diagonal constant
     double d = 2.0/(h*h); // diagonal constant
@@ -237,6 +237,9 @@ int main()
     vec a(n);
     vec b(n);
     vec c(n);
+    double x;
+    vec a(n);
+    vec b(n);
     for (int i=0;i<n;i++){
         a(i) = eigvec(i,0);
         b(i) = eigvec(i,1);

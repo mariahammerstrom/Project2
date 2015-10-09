@@ -5,5 +5,10 @@ CONFIG -= qt
 
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -larmadillo
+<<<<<<< Updated upstream
+=======
+
+SOURCES += main.cpp \
+>>>>>>> Stashed changes
 
 SOURCES += main.cpp
