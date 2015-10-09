@@ -184,7 +184,7 @@ In order to minimize this equation, $c$ should be as close to 1 as possible. $c$
 \begin{equation}\label{eq:tan}
 	t = -\tau \pm \sqrt{1+\tau^2}.
 \end{equation}
-Making $t$ as small as possible, will make $c$ as close to 1 as possible, as seen from Eq. (\ref{eq:cos}). That means choosing the smaller of the roots in Eq. (\ref{eq:tan}).
+Making $t$ as small as possible will make $c$ as close to 1 as possible, as seen from Eq. (\ref{eq:cos}). That means choosing the smaller of the roots in Eq. (\ref{eq:tan}).
 
 The \textbf{algorithm} for Jacobi's method can be described as follows: 
 
@@ -206,7 +206,7 @@ In addition to solving the problem in a brute-force way using Jacobi's method, w
 \subsection{Harmonic oscillator}
 In the case of the harmonic oscillator there is an analytical solution for the lowest eigenvalues. For $l = 0$ these are $\lambda_0 = 3, \lambda_1 = 7, \lambda_2 = 11, \dots$ Solving this numerically will not lead to the exact values, but we can get very close to this. We have computed the eigenvalues using our algorithm as described in the previous section, as well as using the Armadillo package.
 
-In order to get the lowest three eigenvalues with four leading digits, we need around $n_{\textrm{step}} = 200$. Then the lowest three eigenvalues are: $\lambda_0 = 2.999, \lambda_1 = 6.99$ and $\lambda_2 = 10.99$ using $\rho_{\textrm{max}} = 10.0$. 
+In order to get the lowest three eigenvalues with four leading digits, we need around $n_{\textrm{step}} = 200$. Then the lowest three eigenvalues are: $\lambda_0 = 2.999, \lambda_1 = 6.996$ and $\lambda_2 = 10.99$ using $\rho_{\textrm{max}} = 10.0$. 
 
 The eigenvalues will depend on our choice for $\rho_{\textrm{max}}$. By testing we find that a lower $\rho_{\textrm{max}}$ makes the eigenvalues more precise, say $\rho_{\textrm{max}} = 4.0$, but gets worse for values lower than this, making the eigenvalues larger than they should be. For values higher than 10.0 the eigenvalues also are bad, becoming too small.
 
@@ -274,7 +274,7 @@ We see that the analytic and numerical eigenvalues correspond quite nicely for a
 
 We calculate the eigenvectors for the ground state using Armadillo's \verb@eig_sym@ function. The eigenvectors represents the wave function. A plot of the wave function for two electrons as a function of relative coordinates $\rho$ and different values of $\omega_r$ is plotted in Fig. \ref{fig:wave_function}. We see that a stronger oscillator potential $\omega_r$ creates a deeper potential well, as expected. $\rho$ represents the distance between the two electrons, so we see that for a larger oscillator potential, the electrons will be closer.
 
-For the case of $\omega_r = 0.01$, the chosen value of $\rho_{\mathrm{max}}$ is important. $\rho_{\mathrm{max}}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{\mathrm{max}} = 40$.
+For the case of $\omega_r = 0.01$, the chosen value of $\rho_{\mathrm{max}}$ is important. $\rho_{\mathrm{max}}$ needs to be quite large to make the plot come out right in this case. We landed on $\rho_{\mathrm{max}} = 50$.
 
 \begin{center}
 	\includegraphics[width=90mm]{../build-Project2-Desktop_Qt_5_5_0_clang_64bit-Debug/wave_function.png} 	
@@ -305,7 +305,8 @@ The expression for the analytical values, Eq. (\ref{eq:analytical}), was approxi
 
 \section{Conclusions}
 We found that Armadillo is faster than the brute force approach of Jacobi iterations.
-In the case of a harmonic oscillator, using Jacobi iterations, we needed $n=200$ in order to get the three lowest eigenvalues with four leading digits. The number of iterations needed to find the eigenvalues of an $n\times n$ matrix was found to be approximately $n^{2.1}$.
+
+In the case of a harmonic oscillator, using Jacobi iterations, we needed $n=200$ in order to get the three lowest eigenvalues with three leading digits. The number of iterations needed to find the eigenvalues of an $n\times n$ matrix was found to be approximately $n^{2.1}$. The numerical results corresponded well with the analytical solutions for both the potentials we were considering.
 
 In the case of interacting electrons, we found that for higher values of $\omega_r$, the relative distance $\rho$ between the two electrons decreased, see figure \ref{fig:prob_dist}.
 Increasing $\rho_{\mathrm{max}}$ seemed to only have an effect when $\omega_r = 0.01$.

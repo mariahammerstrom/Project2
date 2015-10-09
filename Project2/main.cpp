@@ -102,9 +102,9 @@ mat rotate (mat A, mat R, int k, int l, int n){
 int main()
 {
     // CONSTANTS
-    int n = 1000; // number of steps
+    int n = 200; // number of steps
     double rho_min = 0.0; // minimum value
-    double rho_max = 50.0; // maximum value (set by the user)
+    double rho_max = 10.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
     double omega = 0.01;
 
@@ -130,8 +130,8 @@ int main()
 
     for (int i = 0; i < n+1; i++){
         rho(i) = rho_min + (i)*h;
-        V(i) = potential_C(rho(i),omega);
-        //V(i) = potential_HO(rho(i));
+        //V(i) = potential_C(rho(i),omega);
+        V(i) = potential_HO(rho(i));
     }
 
     // Set up tridiagonal matrix A
