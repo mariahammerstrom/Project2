@@ -189,12 +189,12 @@ Making $t$ as small as possible, will make $c$ as close to 1 as possible, as see
 The \textbf{algorithm} for Jacobi's method can be described as follows: 
 
 \begin{itemize}
-	\item Choose a tolerance $\epsilon$, typically $10^{-8}$ or smaller.
+	\item Choose a tolerance $\varepsilon$, typically $10^{-8}$ or smaller.
 	\item Find matrix element $a_{kl}$ with the largest value and its indices $k$ and $l$.
-	\item Check that max$(a_{kl}^2) > \epsilon$ for the off-diagonal matrix elements.
+	\item Check that max$(a_{kl}^2) > \varepsilon$ for the off-diagonal matrix elements.
 	\item Compute $\tau$, sin $\theta$, cos $\theta$, tan $\theta$.
 	\item Compute the similarity transformations for this set of values for $(k,l)$, which will create a new matrix, \textbf{B} = \textbf{S}$(k,l,\theta)^T$\textbf{A}\textbf{S}$(k,l,\theta)$.
-	\item Continue to follow these steps until max$(a_{kl}^2) > \epsilon$ is no longer the case.
+	\item Continue to follow these steps until max$(a_{kl}^2) > \varepsilon$ is no longer the case.
 \end{itemize}
 
 \subsection{Numerical library}
@@ -244,10 +244,10 @@ Next we want to study the harmonic oscillator with Coulomb interactions. For spe
 \begin{aligned}
 	V_0 &= \frac{3}{2} \bigg[ \frac{\omega_r}{2} \bigg]^{2/3} \\
 	\omega_e &= \sqrt{3} \omega_r \\
-	\epsilon_m^{'} &= V_0 + \omega_e [m + \frac{1}{2}] \textrm{,       } m = 0,1, \dots
+	\varepsilon_m^{'} &= V_0 + \omega_e [m + \frac{1}{2}] \textrm{,       } m = 0,1, \dots
 \end{aligned}
 \end{equation}
-where $\epsilon_m^{'}$ gives the analytical eigenvalues.
+where $\varepsilon_m^{'}$ gives the analytical eigenvalues.
 
 For $n = 200$ and $\rho_{\textrm{max}} = 50.0$ we find:
 
