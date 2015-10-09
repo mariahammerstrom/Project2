@@ -56,6 +56,7 @@ omega = 0.01;
 filename = sprintf('Eigenvectors2_%0.6f.txt',omega);
 [x4,y4] = textread(filename,'%f %f',n);
 
+
 % PLOTTING:
 figure;
 plot(x,normc(y),x2,normc(y2),x3,normc(y3),x4,normc(y4)); % normalized

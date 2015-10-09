@@ -102,7 +102,7 @@ mat rotate (mat A, mat R, int k, int l, int n){
 int main()
 {
     // CONSTANTS
-    int n = 200; // number of steps
+    int n = 1000; // number of steps
     double rho_min = 0.0; // minimum value
     double rho_max = 50.0; // maximum value (set by the user)
     double h = (rho_max - rho_min)/n; // step length
@@ -130,8 +130,8 @@ int main()
 
     for (int i = 0; i < n+1; i++){
         rho(i) = rho_min + (i)*h;
-        //V(i) = potential_C(rho(i),omega);
-        V(i) = potential_HO(rho(i));
+        V(i) = potential_C(rho(i),omega);
+        //V(i) = potential_HO(rho(i));
     }
 
     // Set up tridiagonal matrix A
@@ -230,6 +230,7 @@ int main()
 
     finish = clock(); // final time
     cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
+
 
     // Tests: Orthogonallity of eigenvectors
     double x,y,z;
