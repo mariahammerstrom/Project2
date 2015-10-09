@@ -232,5 +232,12 @@ int main()
     finish = clock(); // final time
     cout << "Time: " << "\t" << ((finish - start)/CLOCKS_PER_SEC) << " seconds" << endl; // print elapsed time
 
+    // Tests
+    // Orthogonallity of eigenvectors
+    double x;
+    x = dot(eigvec(0,0),eigvec(1,0));
+    if(x<10e-5) cout << "Orthogonallity: True" << endl;
+    else cout << "Orthogonallity: False" << endl;
+
     return 0;
 }
