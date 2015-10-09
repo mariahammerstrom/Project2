@@ -14,7 +14,6 @@
 #include <fstream>
 #include <algorithm>
 #include <armadillo>
-#include "lib.h"
 
 using namespace std;
 using namespace arma;
@@ -234,14 +233,19 @@ int main()
 
     // Tests
     // Orthogonallity of eigenvectors
-    double x;
-    vec a,b;
+    double x,y,z;
+    vec a(n);
+    vec b(n);
+    vec c(n);
     for (int i=0;i<n;i++){
         a(i) = eigvec(i,0);
         b(i) = eigvec(i,1);
+        c(i) = eigvec(i,3);
     }
     x = dot(a,b);
-    if(x<10e-5) cout << "Orthogonallity: True" << endl;
+    y = dot(a,c);
+    z = dot(b,c);
+    if(x<10e-5 && y<10e-5 && z<10e-5) cout << "Orthogonallity: True" << endl;
     else cout << "Orthogonallity: False" << endl;
 
     return 0;
